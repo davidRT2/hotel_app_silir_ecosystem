@@ -2,6 +2,7 @@
 
 use Illuminate\Support\Facades\Route;
 
+use App\Http\Controllers\ApiController;
 /*
 |--------------------------------------------------------------------------
 | Web Routes
@@ -25,3 +26,9 @@ Route::get('/gallery', function () {
 Route::get('/contact', function () {
     return view('contact');
 });
+
+Route::get('/penginap', "App\Http\Controllers\ApiController@getDataPenginap");
+
+
+Route::get('/kamar/{kamar}', "App\Http\Controllers\ApiController@getDetailKamar");
+
