@@ -27,8 +27,13 @@ Route::get('/contact', function () {
     return view('contact');
 });
 
-Route::get('/penginap', "App\Http\Controllers\ApiController@getDataPenginap");
+Route::group(['prefix' => 'penginap'], function () {
+    Route::get('/', [ApiController::class, 'getDataPenginap']); 
+    Route::get('/{id}', [ApiController::class, 'getPenginapByID']); 
+    Route::get('/nama/{nama}', [ApiController::class, 'getPenginapByName']); 
+
+});
 
 
-Route::get('/kamar/{kamar}', "App\Http\Controllers\ApiController@getDetailKamar");
+Route::get('/kamar/{kamar}', [ApiController::class, 'getDetailKamar']);
 

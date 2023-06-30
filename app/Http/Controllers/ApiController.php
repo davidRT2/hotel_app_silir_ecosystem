@@ -22,6 +22,32 @@ class ApiController extends Controller
         return view('debug.detailKamar', compact('responseBody'));
     }
 
+    public function getPenginapByID($id){
+        $client = new Client();
+        $url = "http://localhost:8080/api/v1/penginap/{$id}";
+        $response = $client->request('GET', $url, [
+            'verify' => false,
+        ]);
+    
+        $data = json_decode($response->getBody(), true);
+        $data = $data['data'];
+
+        return view('debug.byID', compact('data'));
+    }
+
+    public function getPenginapByName($name){
+        $client = new Client();
+        $url = "http://localhost:8080/api/v1/penginap/nama/{$name}";
+        $response = $client->request('GET', $url, [
+            'verify' => false,
+        ]);
+    
+        $data = json_decode($response->getBody(), true);
+        $data = $data['data'];
+
+        return view('debug.byName', compact('data'));
+    }
+
     public function getDetailKamar($id)
     {
         $client = new Client();
@@ -36,5 +62,7 @@ class ApiController extends Controller
     
         return view('debug.beDebug', compact('data'));
     }
+
+
     
 }
