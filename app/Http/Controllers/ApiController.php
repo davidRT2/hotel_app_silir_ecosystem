@@ -25,6 +25,19 @@ class ApiController extends Controller
 
         return view('debug.detailKamar', compact('responseBody'));
     }
+    public function getTipe()
+    {
+        $client = new Client();
+        $url = "http://localhost:8080/api/v1/tipe";
+
+        $response = $client->request('GET', $url, [
+            'verify' => false,
+        ]);
+
+        $responseBody = json_decode($response->getBody(), true);
+        $data = $responseBody['data'];
+        return view('reservation', compact('data'));
+    }
 
     public function getPenginapByID($id){
         $client = new Client();

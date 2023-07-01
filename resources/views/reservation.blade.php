@@ -46,8 +46,9 @@
                             <span class="form-label">Room Type</span>
                             <select class="form-control" required>
                                 <option value="" selected hidden>Select room type</option>
-                                <option>Private Room (1 to 2 People)</option>
-                                <option>Family Room (1 to 4 People)</option>
+                                @foreach($data as $tipe)
+                                <option value="{{ $tipe['id_tipe'] }}">{{ $tipe['nama_tipe'] }}</option>
+                                @endforeach
                             </select>
                             <span class="select-arrow"></span>
                         </div>

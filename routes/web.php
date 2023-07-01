@@ -16,16 +16,13 @@ use App\Http\Controllers\ApiController;
 
 Route::get('/', function () {
     return view('home');
-});
-Route::get('/reservation', function () {
-    return view('reservation');
-});
+})->name('home');
 Route::get('/gallery', function () {
     return view('gallery');
-});
+})->name('gallery');
 Route::get('/contact', function () {
     return view('contact');
-});
+})->name('contactus');
 
 Route::group(['prefix' => 'penginap'], function () {
     Route::get('/', [ApiController::class, 'getDataPenginap']); 
@@ -41,5 +38,6 @@ Route::get('/home', function(){
     return view('home');
 });
 
+Route::get('/reservation', [ApiController::class, 'getTipe'])->name('reservation.index');
 //lucky TI2B
 

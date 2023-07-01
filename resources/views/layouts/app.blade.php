@@ -1,5 +1,6 @@
 <!DOCTYPE html>
 <html>
+
 <head>
     <title>Hotel Silir</title>
     <link rel="icon" href="{{ asset('img/logo.jpeg') }}" type="image/png">
@@ -23,6 +24,7 @@
     <!-- Modernizr JS -->
     <script src="{{ asset('js/modernizr-2.6.2.min.js') }}"></script>
 </head>
+
 <body>
     <header>
         <!-- Konten header -->
@@ -38,10 +40,10 @@
                             </div>
                             <div class="col-xs-10 text-right menu-1">
                                 <ul>
-                                    <li class="{{ Request::is('/') ? 'active' : '' }}"><a href="/">Home</a></li>
-                                    <li class="{{ Request::is('reservation') ? 'active' : '' }}"><a href="/reservation">Reservation</a></li>
-                                    <li class="{{ Request::is('gallery') ? 'active' : '' }}"><a href="/gallery">Gallery</a></li>
-                                    <li class="{{ Request::is('contact') ? 'active' : '' }}"><a href="/contact">Contact</a></li>
+                                    <li class="{{ Request::is('/') ? 'active' : '' }}"><a href="{{ route('home') }}">Home</a></li>
+                                    <li class="{{ Request::is('reservation') ? 'active' : '' }}"><a href="{{ route('reservation.index') }}">Reservation</a></li>
+                                    <li class="{{ Request::is('gallery') ? 'active' : '' }}"><a href="{{ route('gallery') }}">Gallery</a></li>
+                                    <li class="{{ Request::is('contact') ? 'active' : '' }}"><a href="{{ route('contactus') }}">Contact</a></li>
                                 </ul>
                             </div>
                         </div>
@@ -88,4 +90,5 @@
         });
     </script>
 </body>
+
 </html>
