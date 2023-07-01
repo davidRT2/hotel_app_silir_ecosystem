@@ -37,3 +37,9 @@ Route::group(['prefix' => 'penginap'], function () {
 
 Route::get('/kamar/{kamar}', [ApiController::class, 'getDetailKamar']);
 
+Route::get('/home', function(){
+    return view('home');
+});
+
+//lucky TI2B
+

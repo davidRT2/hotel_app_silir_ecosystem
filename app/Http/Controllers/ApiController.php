@@ -8,6 +8,10 @@ use GuzzleHttp\Client;
 
 class ApiController extends Controller
 {
+    /**
+     *Mendapatkan data daftar penginap 
+     *
+     */
     public function getDataPenginap()
     {
         $client = new Client();
