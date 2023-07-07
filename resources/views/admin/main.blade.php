@@ -154,8 +154,8 @@
     <script src="{{ asset('style/vendors/popper.js/dist/umd/popper.min.js')}}"></script>
     <script src="{{ asset('style/vendors/bootstrap/dist/js/bootstrap.min.js')}}"></script>
     <script src="{{ asset('style/assets/js/main.js')}} "></script>
-    <script src="{{ asset('vendors/js/Chart.bundle.min.js') }}"></script>
-    <script src="{{ asset('assets/jschartjs-init.js') }}"></script>
+    <script src="{{ asset('style/vendors/chart.js/dist/Chart.bundle.min.js') }}"></script>
+    <script src="{{ asset('js/init-scripts/chart-js/chartjs-init.js') }}"></script>
 
 </body>
 

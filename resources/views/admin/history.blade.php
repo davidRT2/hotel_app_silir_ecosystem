@@ -6,30 +6,31 @@
 @php
 $data = [
 [
-'id' => 'P001',
-'id_kamar' => 'K001',
-'nama' => 'Febri Adi Setyawan',
-'telepon' => '08123456789',
+'id_pengunjung' => 'P001',
+'nama_pengunjung' => 'John Doe',
 'check_in' => '2023-07-01',
 'check_out' => '2023-07-05',
+'penalty' => '0',
+'total_bayar' => '500000',
 ],
 [
-'id' => 'P002',
-'id_kamar' => 'K002',
-'nama' => 'Muhammad David Akbar',
-'telepon' => '08123456789',
-'check_in' => '2023-07-01',
-'check_out' => '2023-07-05',
+'id_pengunjung' => 'P002',
+'nama_pengunjung' => 'Jane Smith',
+'check_in' => '2023-07-02',
+'check_out' => '2023-07-07',
+'penalty' => '50000',
+'total_bayar' => '600000',
 ],
 [
-'id' => 'P003',
-'id_kamar' => 'K003',
-'nama' => 'Lucky Nur Fitriana',
-'telepon' => '08123456789',
-'check_in' => '2023-07-01',
-'check_out' => '2023-07-05',
+'id_pengunjung' => 'P003',
+'nama_pengunjung' => 'Michael Johnson',
+'check_in' => '2023-07-03',
+'check_out' => '2023-07-08',
+'penalty' => '200000',
+'total_bayar' => '800000',
 ],
 ];
+
 @endphp
 <div class="breadcrumbs">
     <div class="col-sm-4">
@@ -48,32 +49,23 @@ $data = [
 </div>
 <div class="content mt-3">
     <div class="animated fadeIn">
-        <div class="col-lg-12">
-            <div class="col-lg-12">
-                <div class="card">
-                    <div class="card-body">
-                        <h4 class="mb-3">Team Commits </h4>
-                        <canvas id="team-chart"></canvas>
-                    </div>
+        <div class="col-sm-8">
+            <div class="card">
+                <div class="card-body">
+                    <h4 class="mb-3">Trend Penginap</h4>
+                    <canvas id="team-chart"></canvas>
                 </div>
-            </div><!-- /# column -->
-        </div>
+            </div>
+        </div><!-- /# column -->
 
         <div class="breadcrumbs">
             <div class="col-md-12">
                 <div class="page-header float-left">
                     <div class="page-title">
-                        <h1>Data Pengunjung</h1>
+                        <h1>Riwayat Pengunjung</h1>
                         <div class="card">
-                            <div class="card-header">
-                                <div class="pull-right">
-                                    <!-- <a href="{{ url('barang/add') }}" class="btn btn-success btn-sm"> -->
-                                    <i class="fa fa-plus"></i> Tambah Data
-                                    </a>
-                                </div>
-                            </div>
                             <div class="card-body table-responsive">
-                                <table class="table table-bordered">
+                                <table class="table table-striped">
                                     @php
                                     $no = 0;
                                     @endphp
@@ -81,28 +73,23 @@ $data = [
                                         <tr>
                                             <th>No</th>
                                             <th>ID Pengunjung</th>
-                                            <th>ID Kamar</th>
-                                            <th>Nama</th>
-                                            <th>Telepon</th>
-                                            <th>Tanggal Masuk</th>
-                                            <th>Tanggal Keluar</th>
-                                            <th>Aksi</th>
+                                            <th>Nama Pengunjung</th>
+                                            <th>Check In</th>
+                                            <th>Check Out</th>
+                                            <th>Penalty</th>
+                                            <th>Total Bayar</th>
                                         </tr>
                                     </thead>
                                     <tbody>
                                         @foreach($data as $item)
                                         <tr>
-                                            <td>{{ ++$no }}</td>
-                                            <td>{{ $item['id'] }}</td>
-                                            <td>{{ $item['id_kamar'] }}</td>
-                                            <td>{{ $item['nama'] }}</td>
-                                            <td>{{ $item['telepon'] }}</td>
+                                            <td>{{ $no++ }}</td>
+                                            <td>{{ $item['id_pengunjung'] }}</td>
+                                            <td>{{ $item['nama_pengunjung'] }}</td>
                                             <td>{{ $item['check_in'] }}</td>
                                             <td>{{ $item['check_out'] }}</td>
-                                            <td>
-                                                <button type="button" class="btn-sm btn-danger">checkout</button>
-                                                <button type="button" class="btn-sm btn-primary">Perpanjang</button>
-                                            </td>
+                                            <td>{{ $item['penalty'] }}</td>
+                                            <td>{{ $item['total_bayar'] }}</td>
                                         </tr>
                                         @endforeach
                                     </tbody>
@@ -115,4 +102,28 @@ $data = [
 
         </div>
     </div>
+    <script>
+        document.addEventListener('DOMContentLoaded', function() {
+            var ctx = document.getElementById('team-chart').getContext('2d');
+            var chart = new Chart(ctx, {
+                type: 'line',
+                data: {
+                    labels: ["Jan", "Feb", "Mar", "Apr", "May", "Jun"],
+                    datasets: [{
+                        label: 'Sales Summary',
+                        data: [200, 300, 110, 200, 600, 700],
+                        backgroundColor: 'rgba(0, 123, 255, 0.7)'
+                    }]
+                },
+                options: {
+                    scales: {
+                        y: {
+                            beginAtZero: true
+                        }
+                    }
+                }
+            });
+        });
+    </script>
+
     @endsection
