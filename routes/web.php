@@ -39,6 +39,32 @@ Route::get('/home', function () {
 Route::get('/reservation', [ApiController::class, 'getTipe'])->name('reservation.index');
 //lucky TI2B
 
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
 //test feb
 Route::get('/detail-kamar/{id}', [ApiController::class, 'getDetailKamar'])->name('detail-kamar.index');
 
