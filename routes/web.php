@@ -29,39 +29,6 @@ Route::group(['prefix' => 'penginap'], function () {
     Route::get('/{id}', [ApiController::class, 'getPenginapByID']);
     Route::get('/nama/{nama}', [ApiController::class, 'getPenginapByName']);
 });
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
 Route::get('/home', function () {
     return view('home');
 });
@@ -69,34 +36,30 @@ Route::get('/home', function () {
 Route::get('/reservation', [ApiController::class, 'getTipe'])->name('reservation.index');
 //lucky TI2B
 
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
 //test feb
 Route::get('/detail-kamar/{id}', [ApiController::class, 'getDetailKamar'])->name('detail-kamar.index');
 
 //checkout febri
 Route::post('/checkout', [ApiController::class, 'checkout'])->name('checkout');
+
+//dapid
+
+Route::get('admin/home', function () {
+    return view('admin.home');
+});
+
+Route::get('admin/add', function () {
+    return view('admin.add');
+});
+
+Route::get('admin/history', function () {
+    return view('admin.history');
+});
+
+Route::get('admin/income', function () {
+    return view('admin.income');
+});
+
+Route::get('admin/room', function () {
+    return view('admin.room');
+});
