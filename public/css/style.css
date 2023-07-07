@@ -2028,3 +2028,8 @@ i {
 		left: -25px;
 	}
 }
+/* TAMBAHAN CSS DETAIL KAMAR*/
+    .image-container img {
+        max-width: 100%;
+        height: auto;
+    }

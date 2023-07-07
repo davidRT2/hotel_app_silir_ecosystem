@@ -9,23 +9,22 @@
                 <div class="booking-form">
                     <div class="booking-bg">
                         <div class="form-header">
-                            <h2>Reservation</h2>
+                            <h2>Booking Details</h2>
                             <p>Kami menyediakan kenyamanan dan fasilitas yang terkoneksi ke seluruh lingkungan pariwisata silir</p>
                         </div>
                     </div>
-                    <form action="{{ url('/checkout') }}" method="POST">
-                        @csrf
+                    <form>
                         <div class="row">
                             <div class="col-md-6">
                                 <div class="form-group">
                                     <span class="form-label">Nama</span>
-                                    <input class="form-control" type="text" placeholder="Nama Lengkap" name="nama" required>
+                                    <input class="form-control" type="text" placeholder="Nama Lengkap" value="{{ $nama }}" disabled>
                                 </div>
                             </div>
                             <div class="col-md-6">
                                 <div class="form-group">
                                     <span class="form-label">Nomor Telepon</span>
-                                    <input class="form-control" type="text" placeholder="Nomor Telepon" name="nomor_telepon" required>
+                                    <input class="form-control" type="text" placeholder="Nomor Telepon" value="{{ $nomorTelepon }}" disabled>
                                 </div>
                             </div>
                         </div>
@@ -33,23 +32,20 @@
                             <div class="col-md-6">
                                 <div class="form-group">
                                     <span class="form-label">Check In</span>
-                                    <input class="form-control" type="date" name="check_in" required>
+                                    <input class="form-control" type="date" value="{{ $checkIn }}" disabled>
                                 </div>
                             </div>
                             <div class="col-md-6">
                                 <div class="form-group">
                                     <span class="form-label">Check Out</span>
-                                    <input class="form-control" type="date" name="check_out" required>
+                                    <input class="form-control" type="date" value="{{ $checkOut }}" disabled>
                                 </div>
                             </div>
                         </div>
                         <div class="form-group">
                             <span class="form-label">Room Type</span>
-                            <select class="form-control" name="room_type" required>
-                                <option value="" selected hidden>Select room type</option>
-                                @foreach($data as $tipe)
-                                <option value="{{ $tipe['id_tipe'] }}">{{ $tipe['nama_tipe'] }}</option>
-                                @endforeach
+                            <select class="form-control" disabled>
+                                <option value="{{ $roomType }}" selected>{{ $roomType }}</option>
                             </select>
                             <span class="select-arrow"></span>
                         </div>
@@ -57,18 +53,23 @@
                             <div class="col-md-6">
                                 <div class="form-group">
                                     <span class="form-label">Kode Tiket</span>
-                                    <input class="form-control" type="text" placeholder="Kode Tiket" name="kode_tiket" required>
+                                    <input class="form-control" type="text" placeholder="Kode Tiket" value="{{ $kodeTiket }}" disabled>
                                 </div>
                             </div>
                             <div class="col-md-6">
                                 <div class="form-group">
                                     <span class="form-label">Kode Parkir</span>
-                                    <input class="form-control" type="text" placeholder="Kode Parkir" name="kode_parkir" required>
+                                    <input class="form-control" type="text" placeholder="Kode Parkir" value="{{ $kodeParkir }}" disabled>
                                 </div>
                             </div>
                         </div>
-                        <div class="form-btn">
-                            <button type="submit" class="submit-btn">Book Now</button>
+                        <div class="row">
+                            <div class="col-md-6">
+                                <div class="form-group">
+                                    <span class="form-label">No. Booking</span>
+                                    <input class="form-control" type="text" placeholder="No. Booking" name="no_booking" required>
+                                </div>
+                            </div>
                         </div>
                     </form>
                 </div>

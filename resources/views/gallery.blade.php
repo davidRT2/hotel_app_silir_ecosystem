@@ -7,33 +7,33 @@
 <div class="gtco-container" style="background-color: #1f1f1f">
     <div class="card-container">
         <div class="card">
-            <img src="img/logo.jpeg" alt="..." class="card__image" />
+            <img src="img/suite-room.jpg" alt="..." class="card__image" />
             <div class="card__body">
                 <div>
                     <h2 class="card__category">Suite Room</h2>
-                    <p class="card__price">$99 per night</p>
+                    <p class="card__price">Rp. 2.000.000/night</p>
                 </div>
-                <a href="#" class="card__button">Book Now</a>
+                <a href="{{ url('detail-kamar', ['id' => 'K002']) }}" class="card__button">Details</a>
             </div>
         </div>
         <div class="card">
-            <img src="img/logo.jpeg" alt="..." class="card__image" />
+            <img src="img/standart-room.jpg" alt="..." class="card__image" />
             <div class="card__body">
                 <div>
                     <h2 class="card__category">Standart Room</h2>
-                    <p class="card__price">$99 per night</p>
+                    <p class="card__price">Rp. 500.000/night</p>
                 </div>
-                <a href="#" class="card__button">Book Now</a>
+                <a href="{{ url('detail-kamar', ['id' => 'K001']) }}" class="card__button">Details</a>
             </div>
         </div>
         <div class="card">
-            <img src="img/logo.jpeg" alt="..." class="card__image" />
+            <img src="img/deluxe-room.jpg" alt="..." class="card__image" />
             <div class="card__body">
                 <div>
-                    <h2 class="card__category">John Doe</h2>
-                    <p class="card__price">$99 per night</p>
+                    <h2 class="card__category">Deluxe Room</h2>
+                    <p class="card__price">Rp. 1.000.000/night</p>
                 </div>
-                <a href="#" class="card__button">Book Now</a>
+                <a href="{{ url('detail-kamar', ['id' => 'K003']) }}" class="card__button">Details</a>
             </div>
         </div>
     </div>

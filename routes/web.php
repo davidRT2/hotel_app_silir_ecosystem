@@ -25,21 +25,24 @@ Route::get('/contact', function () {
 })->name('contactus');
 
 Route::group(['prefix' => 'penginap'], function () {
-    Route::get('/', [ApiController::class, 'getDataPenginap']); 
-    Route::get('/{id}', [ApiController::class, 'getPenginapByID']); 
-    Route::get('/nama/{nama}', [ApiController::class, 'getPenginapByName']); 
-
+    Route::get('/', [ApiController::class, 'getDataPenginap']);
+    Route::get('/{id}', [ApiController::class, 'getPenginapByID']);
+    Route::get('/nama/{nama}', [ApiController::class, 'getPenginapByName']);
 });
-
-
-Route::get('/kamar/{kamar}', [ApiController::class, 'getDetailKamar']);
-
-Route::get('/home', function(){
+Route::get('/home', function () {
     return view('home');
 });
 
 Route::get('/reservation', [ApiController::class, 'getTipe'])->name('reservation.index');
 //lucky TI2B
+
+//test feb
+Route::get('/detail-kamar/{id}', [ApiController::class, 'getDetailKamar'])->name('detail-kamar.index');
+
+//checkout febri
+Route::post('/checkout', [ApiController::class, 'checkout'])->name('checkout');
+
+//dapid
 
 Route::get('admin/home', function () {
     return view('admin.home');
