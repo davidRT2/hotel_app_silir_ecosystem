@@ -44,6 +44,7 @@
                                     <li class="{{ Request::is('reservation') ? 'active' : '' }}"><a href="{{ route('reservation.index') }}">Reservation</a></li>
                                     <li class="{{ Request::is('gallery') ? 'active' : '' }}"><a href="{{ route('gallery') }}">Gallery</a></li>
                                     <li class="{{ Request::is('contact') ? 'active' : '' }}"><a href="{{ route('contactus') }}">Contact</a></li>
+                                    <li class="{{ Request::is('admin/home') ? 'active' : '' }}"><a href="{{ url('admin/home') }}">Login</a></li>
                                 </ul>
                             </div>
                         </div>

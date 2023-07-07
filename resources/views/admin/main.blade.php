@@ -1,4 +1,3 @@
-
 <!doctype html>
 <!--[if lt IE 7]>      <html class="no-js lt-ie9 lt-ie8 lt-ie7" lang=""> <![endif]-->
 <!--[if IE 7]>         <html class="no-js lt-ie9 lt-ie8" lang=""> <![endif]-->
@@ -42,7 +41,7 @@
                 <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#main-menu" aria-controls="main-menu" aria-expanded="false" aria-label="Toggle navigation">
                     <i class="fa fa-bars"></i>
                 </button>
-                <a class="navbar-brand" href="./"><img src="{{ asset('style/images/logo.png')}}" alt="Logo"></a>
+                <a class="navbar-brand" href="./"><strong>SILIR&nbsp;</strong>Hotel</a>
                 <a class="navbar-brand hidden" href="./"><img src="{{ asset('style/images/logo2.png')}}" alt="Logo"></a>
             </div>
 
@@ -98,17 +97,17 @@
                             <div class="dropdown-menu" aria-labelledby="notification">
                                 <p class="red">You have 3 Notification</p>
                                 <a class="dropdown-item media bg-flat-color-1" href="#">
-                                <i class="fa fa-check"></i>
-                                <p>Server #1 overloaded.</p>
-                            </a>
+                                    <i class="fa fa-check"></i>
+                                    <p>Server #1 overloaded.</p>
+                                </a>
                                 <a class="dropdown-item media bg-flat-color-4" href="#">
-                                <i class="fa fa-info"></i>
-                                <p>Server #2 overloaded.</p>
-                            </a>
+                                    <i class="fa fa-info"></i>
+                                    <p>Server #2 overloaded.</p>
+                                </a>
                                 <a class="dropdown-item media bg-flat-color-5" href="#">
-                                <i class="fa fa-warning"></i>
-                                <p>Server #3 overloaded.</p>
-                            </a>
+                                    <i class="fa fa-warning"></i>
+                                    <p>Server #3 overloaded.</p>
+                                </a>
                             </div>
                         </div>
 
@@ -140,9 +139,9 @@
 
         @yield('content')
 
-        
-        
-        
+
+
+
 
 
 
@@ -155,7 +154,8 @@
     <script src="{{ asset('style/vendors/popper.js/dist/umd/popper.min.js')}}"></script>
     <script src="{{ asset('style/vendors/bootstrap/dist/js/bootstrap.min.js')}}"></script>
     <script src="{{ asset('style/assets/js/main.js')}} "></script>
-
+    <script src="{{ asset('vendors/js/Chart.bundle.min.js') }}"></script>
+    <script src="{{ asset('assets/jschartjs-init.js') }}"></script>
 
 </body>
 
