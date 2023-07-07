@@ -52,10 +52,16 @@
                         <a href="{{ url('admin/home') }}"> <i class="menu-icon fa fa-dashboard"></i>Dashboard </a>
                     </li>
                     <li>
-                        <a href="{{ url('barang') }}"> <i class="menu-icon fa fa-puzzle-piece"></i>Barang </a>
+                        <a href="{{ url('admin/add') }}"> <i class="menu-icon fa fa-plus-square"></i>Add New </a>
                     </li>
                     <li>
-                        <a href="{{ url('program') }}"> <i class="menu-icon fa fa-puzzle-piece"></i>Program </a>
+                        <a href="{{ url('admin/history') }}"> <i class="menu-icon fa fa-database "></i>History </a>
+                    </li>
+                    <li>
+                        <a href="{{ url('admin/income') }}"> <i class="menu-icon fa fa-line-chart"></i>Income </a>
+                    </li>
+                    <li>
+                        <a href="{{ url('admin/room') }}"> <i class="menu-icon fa fa-book"></i>Room </a>
                     </li>
                 </ul>
             </div><!-- /.navbar-collapse -->
