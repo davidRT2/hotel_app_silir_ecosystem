@@ -32,6 +32,36 @@ Route::group(['prefix' => 'penginap'], function () {
 
 
 
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
 Route::get('/home', function () {
     return view('home');
 });
