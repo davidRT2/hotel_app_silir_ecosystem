@@ -43,10 +43,7 @@ Route::get('/detail-kamar/{id}', [ApiController::class, 'getDetailKamar'])->name
 Route::post('/checkout', [ApiController::class, 'checkout'])->name('checkout');
 
 //dapid
-
-Route::get('admin/home', function () {
-    return view('admin.home');
-});
+Route::get('admin/home', [ApiController::class, 'getDataPenginap']);
 
 Route::get('admin/add', function () {
     return view('admin.add');
