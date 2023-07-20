@@ -18,7 +18,7 @@ class ApiController extends Controller
             'verify' => false,
         ]);
 
-        $urlKamar = $this->baseUrl . "kamar/";
+        $urlKamar = $this->baseUrl . "kamar";
 
         $responKamar = $client->request('GET', $urlKamar, [
             'verify' => false,

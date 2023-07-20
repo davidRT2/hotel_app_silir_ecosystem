@@ -3,6 +3,7 @@
 use Illuminate\Support\Facades\Route;
 
 use App\Http\Controllers\ApiController;
+use App\Http\Controllers\RoomController;
 /*
 |--------------------------------------------------------------------------
 | Web Routes
@@ -57,6 +58,4 @@ Route::get('admin/income', function () {
     return view('admin.income');
 });
 
-Route::get('admin/room', function () {
-    return view('admin.room');
-});
+Route::get('admin/room', [RoomController::class, 'getRoom'])->name('add-room');

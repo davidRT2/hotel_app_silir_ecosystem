@@ -60,7 +60,7 @@
                         <a href="{{ url('admin/income') }}"> <i class="menu-icon fa fa-line-chart"></i>Income </a>
                     </li>
                     <li>
-                        <a href="{{ url('admin/room') }}"> <i class="menu-icon fa fa-book"></i>Room </a>
+                        <a href="{{ route('add-room') }}"> <i class="menu-icon fa fa-book"></i>Room </a>
                     </li>
                 </ul>
             </div><!-- /.navbar-collapse -->
@@ -156,6 +156,70 @@
     <script src="{{ asset('style/assets/js/main.js')}} "></script>
     <script src="{{ asset('style/vendors/chart.js/dist/Chart.bundle.min.js') }}"></script>
     <script src="{{ asset('js/init-scripts/chart-js/chartjs-init.js') }}"></script>
+    <script>
+        var rupiah = document.getElementById('rupiah');
+        rupiah.addEventListener('input', function(e) {
+            // Hilangkan semua karakter non-digit (kecuali titik desimal)
+            var angka = this.value.replace(/[^\d]/g, '');
+
+            // Konversi menjadi angka
+            var inputNumber = parseFloat(angka);
+
+            // Batasi angka maksimal menjadi 50 juta
+            var maxLimit = 50000000;
+            if (inputNumber > maxLimit) {
+                // Jika melebihi batas, ubah nilainya menjadi 50 juta
+                angka = String(maxLimit);
+            }
+
+            // Format angka menjadi angka rupiah dengan pemisah ribuan
+            var formatted = formatRupiah(angka);
+            this.value = formatted;
+        });
+
+        /* Fungsi formatRupiah */
+        function formatRupiah(angka) {
+            var number_string = angka.replace(/[^,\d]/g, '').toString(),
+                split = number_string.split(','),
+                sisa = split[0].length % 3,
+                rupiah = split[0].substr(0, sisa),
+                ribuan = split[0].substr(sisa).match(/\d{3}/gi);
+
+            // tambahkan titik jika yang di input sudah menjadi angka ribuan
+            if (ribuan) {
+                separator = sisa ? '.' : '';
+                rupiah += separator + ribuan.join('.');
+            }
+
+            rupiah = split[1] !== undefined ? rupiah + ',' + split[1] : rupiah;
+            return rupiah;
+        }
+
+        function validateInput(input) {
+            var numericValue = parseInt(input.value);
+
+            // Pastikan nilai input tidak negatif
+            if (isNaN(numericValue) || numericValue < 0) {
+                // Jika nilai input kosong, bukan angka, atau negatif, set nilai input menjadi 0
+                input.value = null;
+            } else {
+                // Jika nilai input positif, panggil fungsi limitMaxKamar untuk membatasi maksimal 20 kamar
+                limitMaxKamar(input);
+            }
+        }
+
+        function limitMaxKamar(input) {
+            // Konversi nilai input menjadi angka
+            var jumlahKamar = parseInt(input.value);
+
+            // Batasi maksimal 20 kamar
+            var maxKamar = 20;
+            if (jumlahKamar > maxKamar) {
+                input.value = maxKamar;
+            }
+        }
+    </script>
+
 
 </body>
 
