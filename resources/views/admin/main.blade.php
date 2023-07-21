@@ -60,7 +60,7 @@
                         <a href="{{ url('admin/income') }}"> <i class="menu-icon fa fa-line-chart"></i>Income </a>
                     </li>
                     <li>
-                        <a href="{{ route('add-room') }}"> <i class="menu-icon fa fa-book"></i>Room </a>
+                        <a href="{{ route('room-index') }}"> <i class="menu-icon fa fa-book"></i>Room </a>
                     </li>
                 </ul>
             </div><!-- /.navbar-collapse -->

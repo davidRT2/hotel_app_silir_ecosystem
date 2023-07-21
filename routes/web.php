@@ -58,4 +58,11 @@ Route::get('admin/income', function () {
     return view('admin.income');
 });
 
-Route::get('admin/room', [RoomController::class, 'getRoom'])->name('add-room');
+/**
+ * Kamar Route Start
+ */
+Route::get('admin/room', [RoomController::class, 'index'])->name('room-index');
+Route::post('admin/room', [RoomController::class, 'add'])->name('add-room');
+/**
+ * Kamar Route End
+ */
