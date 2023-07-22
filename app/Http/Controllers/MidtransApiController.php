@@ -78,4 +78,5 @@ class MidtransApiController extends Controller
         $data = $responseBody['data'];
         return $data;
     }
+
 }
