@@ -29,32 +29,53 @@ class MidtransApiController extends Controller
         Config::$isProduction = false;
         // Set sanitization on (default)
         Config::$isSanitized = true;
-        // Set 3DS transaction for credit card to true
+        // Set3DStransaction for credit card to true
         Config::$is3ds = true;
-
+        $nama = explode(' ',$request->input('nama'));
+        $firstName = $nama[0];
+        $lastName = $nama[1];
+        if(count($nama) > 2){
+            $firstName = $nama[0] .' '. $nama[1];
+            $lastName = $nama[2];
+        }
+        $index = $request->input('namaKamar');
+        $kamar = $this->getDetail($index);
+        // print_r($kamar);
         $params = array(
             'transaction_details' => array(
                 'order_id' => rand(),
-                'gross_amount' => 5000,
+                'gross_amount' => $kamar[0]['harga_per_malam'],
             ),
             'item_details' => array(
                 [
                     'id' => 'A1',
-                    'price' => '5000',
+                    'price' => $kamar[0]['harga_per_malam'],
                     'quantity' => 1,
-                    'name' => 'Apel'
+                    'name' => $kamar[0]['nama_tipe']
                 ]
             ),
             'customer_details' => array(
-                'first_name' => $request->input('nama'),
-                'last_name' => 'asds',
+                'first_name' => $firstName,
+                'last_name' => $lastName,
                 'email' => 'example@gmail.com',
-                'phone' => '09709999809',
+                'phone' => $request->input('nomor'),
             ),
         );
 
         $snapToken = Snap::getSnapToken($params);
         return $snapToken;
         // return view('admin.add', compact('snapToken'));
+    }
+
+    public function getDetail($id)
+    {
+        $client = new Client();
+        $url = $this->baseUrl . 'tipe/' . $id ; // Correct the URL here
+        $response = $client->request('GET', $url, [
+            'verify' => false, // Set it to true for valid SSL certificates
+        ]);
+        $responseBody = json_decode($response->getBody(), true);
+        $data = $responseBody['data'];
+        return $data;
     }
 }

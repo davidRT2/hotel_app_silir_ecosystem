@@ -52,9 +52,10 @@
                                 </div>
                                 <div class="col-md-6">
                                     <label class=" form-control-label">Tipe Kamar</label>
+                                    <input type="hidden" name="namaKamar" id="namaKamar">
                                     <select id="select" class="form-control" name="tipe" required>
-                                        <option value="">Please select</option>
                                         @if (!empty($data))
+                                        <option value="">Please select</option>
                                         @foreach($data as $tipe)
                                         <option value="{{ $tipe['id_tipe'] }}">{{ $tipe['nama_tipe'] }}</option>
                                         @endforeach
@@ -98,7 +99,6 @@
 </div>
 <script type="text/javascript">
     // For example trigger on button clicked, or any time you need
-    var payButton = document.getElementById('pay-button');
     // payButton.addEventListener('click', function(event) {
     $('#bayar').submit(function(event) {
         // Trigger snap popup. @TODO: Replace TRANSACTION_TOKEN_HERE with your transaction token
@@ -113,6 +113,15 @@
             }
         });
         // customer will be redirected after completing payment pop-up
+    });
+</script>
+
+<script>
+    $(document).ready(function(){
+        $('#select').change(function(){
+            var kamar = $(this).val();
+            $('#namaKamar').val(kamar);
+        });
     });
 </script>
 
