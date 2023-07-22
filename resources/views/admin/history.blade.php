@@ -49,7 +49,7 @@ $data = [
 </div>
 <div class="content mt-3">
     <div class="animated fadeIn">
-        <div class="col-sm-8">
+        <div class="col-sm-6">
             <div class="card">
                 <div class="card-body">
                     <h4 class="mb-3">Trend Penginap</h4>
@@ -60,11 +60,11 @@ $data = [
 
         <div class="breadcrumbs">
             <div class="col-md-12">
-                <div class="page-header float-left">
+                <div class="page-header">
                     <div class="page-title">
                         <h1>Riwayat Pengunjung</h1>
-                        <div class="card">
-                            <div class="card-body table-responsive">
+                        <div class="">
+                            <div class="table-responsive">
                                 <table class="table table-striped">
                                     @php
                                     $no = 0;

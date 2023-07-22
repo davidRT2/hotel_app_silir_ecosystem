@@ -134,16 +134,10 @@
 
         </header><!-- /header -->
         <!-- Header-->
-
+        @include('sweetalert::alert')
         @yield('breadcrumbs')
 
         @yield('content')
-
-
-
-
-
-
 
     </div><!-- /#right-panel -->
 
@@ -216,6 +210,8 @@
             var maxKamar = 20;
             if (jumlahKamar > maxKamar) {
                 input.value = maxKamar;
+            }else if(jumlahKamar <= 0){
+                input.value = "";
             }
         }
     </script>

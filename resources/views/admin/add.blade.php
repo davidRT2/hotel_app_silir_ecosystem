@@ -24,7 +24,7 @@
             <div class="card">
                 <div class="card-body">
                     <!-- Credit Card -->
-                    <div id="pay-invoice">
+                    <div>
                         <form action="" method="post" novalidate="novalidate">
                             <div class="form-group text-center">
                             </div>
@@ -77,10 +77,11 @@
                                     </div>
                                 </div>
                                 <small class="form-text text-muted text-right"><strong>**</strong>Jika tidak memiliki kode tiket/ Kode parkir maka dikenakan tarif normal</small>
+                                <br>
                                 <div class="col-md-3 offset-md-6">
-                                    <button id="payment-button" type="submit" class="btn btn-lg btn-warning btn-block">
+                                    <button id="payment-button" type="submit" class="btn btn-md btn-primary">
                                         <i class="fa fa-save fa-lg"></i>&nbsp;
-                                        <span id="payment-button-amount">Proses Pesanan</span>
+                                        <span id="payment-button-amount">Proses Booking</span>
                                         <span id="payment-button-sending" style="display:none;">Sending…</span>
                                     </button>
                                 </div>

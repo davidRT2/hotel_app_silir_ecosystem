@@ -41,7 +41,7 @@
                                     <div class="col-md-3">
                                         <label class=" form-control-label">Jumlah kamar</label>
                                         <div class="input-group">
-                                            <input class="form-control"  type="number" min="0" pattern="^[0-9]+$" oninput="validateInput(this)" name="room-amount" required>
+                                            <input class="form-control" type="number" min="1" pattern="^[0-9]+$" oninput="validateInput(this)" name="room-amount" required>
                                         </div>
                                         <small class="form-text text-muted text-left"><strong>**</strong>Jumlah Kamar maksimal ditambahkan 20 Unit</small>
                                     </div>
@@ -55,13 +55,6 @@
                                             @endforeach
                                         </select>
                                     </div>
-                                    <!-- <div class="col-md-6">
-                                        <label class=" form-control-label">Harga kamar</label>
-                                        <div class="input-group">
-                                            <div class="input-group-addon"><i class="fa fa-money"></i></div>
-                                            <input class="form-control" type="text" id="rupiah" oninput="formatRupiah(this)">
-                                        </div>
-                                    </div> -->
                                 </div>
                                 <br>
                                 <div class="col-md-3 offset-md-10">
@@ -79,12 +72,14 @@
                 <div class="col-md-12">
                     <div class="page-header">
                         <div class="page-title">
-                            <div class="table">
+                            <h1>Data Pengunjung</h1>
+                            <hr>
+                            <div class="table-responsive">
                                 <table class="table table-striped table-bordered">
                                     @php
                                     $no = 0;
                                     @endphp
-                                    <thead  class="thead-dark">
+                                    <thead class="thead-dark">
                                         <tr>
                                             <th>No</th>
                                             <th>ID Kamar</th>
@@ -121,7 +116,8 @@
                 </div>
 
             </div>
+            <hr>
+            {{ $data2->appends(request()->query())->links('pagination::bootstrap-4') }}
         </div> <!-- .card -->
     </div>
-</div>
-@endsection
+    @endsection

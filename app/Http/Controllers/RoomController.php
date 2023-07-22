@@ -5,16 +5,18 @@ namespace App\Http\Controllers;
 use GuzzleHttp\Client;
 
 use Illuminate\Http\Request;
+use Illuminate\Pagination\Paginator;
 use Illuminate\Support\Facades\Http;
 use Illuminate\Support\Facades\Redirect;
-use TypeError;
+use Illuminate\Support\Collection;
+use Illuminate\Pagination\LengthAwarePaginator;
 
 class RoomController extends Controller
 {
     //
     private $baseUrl = "localhost:8080/api/v1/";
 
-    public function index()
+    public function index(Request $request)
     {
         $client = new Client();
         $url = $this->baseUrl . "tipe";
@@ -30,10 +32,26 @@ class RoomController extends Controller
         $responseBody = json_decode($response->getBody(), true);
         $data = $responseBody['data'];
         $responseBody2 = json_decode($response2->getBody(), true);
-        $data2 = $responseBody2['data'];
+        $data2 = $this->paginate($responseBody2['data'], 5, null, [], $request->fullUrl());
+
 
         return view('admin.room', compact('data', 'data2'));
     }
+
+    public function paginate($items, $perPage = 5, $page = null, $options = [], $currentUrl)
+    {
+        $page = $page ?: (Paginator::resolveCurrentPage() ?: 1);
+        $items = $items instanceof Collection ? $items : Collection::make($items);
+
+        // Dapatkan URL saat ini dan hapus parameter 'page' dari URL
+        $currentUrl = strtok($currentUrl, '?');
+
+        return new LengthAwarePaginator($items->forPage($page, $perPage), $items->count(), $perPage, $page, [
+            'path' => $currentUrl, // Menggunakan URL saat ini tanpa parameter 'page'
+            // tambahkan opsi-opsi lainnya sesuai kebutuhan
+        ]);
+    }
+
 
     public function add(Request $request)
     {
@@ -67,7 +85,7 @@ class RoomController extends Controller
                 $generateIds[] = ['id_kamar' => $generatedId, 'id_tipe' => $roomType];
             }
         } else {
-            $generatedId = $roomPrefix . str_pad($lastGeneratedNumber+1, 3, '0', STR_PAD_LEFT);
+            $generatedId = $roomPrefix . str_pad($lastGeneratedNumber + 1, 3, '0', STR_PAD_LEFT);
             $generateIds[] = ['id_kamar' => $generatedId, 'id_tipe' => $roomType];
         }
 
@@ -80,10 +98,10 @@ class RoomController extends Controller
         if ($response->successful()) {
             // Berhasil mengirim data ke API
             // return response()->json(['status' => 'success', 'data' => $response->json()], 200);
-            return Redirect::route('room-index');
+            return Redirect::route('room-index')->with('success', 'Kamar Berhasil Ditambahkan');
         } else {
             // Gagal mengirim data ke API
-            return response()->json(['status' => 'failed', 'message' => 'Failed to send data to API'], 500);
+            return Redirect::route('room-index')->with('eror', '500 Failed to send data to API');
         }
     }
 }

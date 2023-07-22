@@ -46,7 +46,7 @@
                         <i class="fa-solid fa-face-smile"></i>
                         <span class="count">{{ count($data) }}</span>
                     </h4>
-                    <p class="text-light">Jumlah Penginap Saat Ini</p>
+                    <h4 class="text-light">Jumlah Penginap Saat Ini</h4>
 
                     <div class="chart-wrapper px-0" style="height:70px;" height="70">
                         <canvas id="widgetChart2"></canvas>
@@ -85,7 +85,7 @@
                     <h4 class="mb-0">
                         <span class="count">{{ $countAvailableRoom }}</span>
                     </h4>
-                    <p class="text-light">Jumlah Kamar Tersedia</p>
+                    <h4 class="text-light">Jumlah Kamar Tersedia</h4>
 
                     <div class="chart-wrapper px-3" style="height:70px;" height="70">
                         <canvas id="widgetChart4"></canvas>
@@ -113,7 +113,7 @@
                     <h4 class="mb-0">
                         <span class="count">{{ $countBookedRoom }}</span>
                     </h4>
-                    <p class="text-light">Jumlah Kamar Terpakai</p>
+                    <h4 class="text-light">Jumlah Kamar Terpakai</h4>
 
                     <div class="chart-wrapper px-0" style="height:70px;" height="70">
                         <canvas id="widgetChart2"></canvas>
@@ -125,24 +125,16 @@
 
         <div class="breadcrumbs">
             <div class="col-md-12">
-                <div class="page-header float-left">
+                <div class="page-header">
                     <div class="page-title">
                         <h1>Data Pengunjung</h1>
-                        <div class="card">
-                            <div class="card-header">
-                                <div class="pull-right">
-                                    <!-- <a href="{{ url('barang/add') }}" class="btn btn-success btn-sm">
-                                    <i class="fa fa-plus"></i> Tambah Data
-                                    </a> -->
-                                    <i>Data Pengunjung Saat Ini</i>
-                                </div>
-                            </div>
-                            <div class="card-body table-responsive">
-                                <table class="table table-bordered">
+                        <hr>
+                            <div class="table-responsive">
+                                <table class="table table-striped table-bordered">
                                     @php
                                     $no = 0;
                                     @endphp
-                                    <thead>
+                                    <thead class="thead-dark">
                                         <tr>
                                             <th>No</th>
                                             <th>ID Pengunjung</th>
@@ -181,7 +173,6 @@
                                     </tbody>
                                 </table>
                             </div>
-                        </div>
                     </div>
                 </div>
             </div>
