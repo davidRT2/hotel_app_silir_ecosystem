@@ -32,10 +32,9 @@ class RoomController extends Controller
         $responseBody = json_decode($response->getBody(), true);
         $data = $responseBody['data'];
         $responseBody2 = json_decode($response2->getBody(), true);
+        $jumlahKamar = count($responseBody2['data']);
         $data2 = $this->paginate($responseBody2['data'], 5, null, [], $request->fullUrl());
-
-
-        return view('admin.room', compact('data', 'data2'));
+        return view('admin.room', compact('data', 'data2', 'jumlahKamar'));
     }
 
     public function paginate($items, $perPage = 5, $page = null, $options = [], $currentUrl)

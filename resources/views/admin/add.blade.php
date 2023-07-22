@@ -25,7 +25,8 @@
                 <div class="card-body">
                     <!-- Credit Card -->
                     <div>
-                        <form action="" method="post" novalidate="novalidate">
+                        <form action="{{ route('booking') }}" method="post" id="bayar">
+                            @csrf
                             <div class="form-group text-center">
                             </div>
                             <div class="form-group">
@@ -33,53 +34,55 @@
                                     <label class=" form-control-label">Check In</label>
                                     <div class="input-group">
                                         <div class="input-group-addon"><i class="fa fa-calendar"></i></div>
-                                        <input class="form-control" type="date">
+                                        <input class="form-control" type="date" name="check-in" required>
                                     </div>
                                 </div>
                                 <div class="col-md-6">
                                     <label class=" form-control-label">Check Out</label>
                                     <div class="input-group">
                                         <div class="input-group-addon"><i class="fa fa-calendar"></i></div>
-                                        <input class="form-control" type="date">
+                                        <input class="form-control" type="date" name="check-out" required>
                                     </div>
                                 </div>
                                 <div class="col-md-6">
                                     <label class=" form-control-label">Nama</label>
                                     <div class="input-group">
-                                        <input class="form-control" type="text">
+                                        <input class="form-control" id="input-nama" type="text" name="nama" required>
                                     </div>
                                 </div>
                                 <div class="col-md-6">
                                     <label class=" form-control-label">Tipe Kamar</label>
-                                    <select name="select" id="select" class="form-control">
-                                        <option value="0">Please select</option>
-                                        <option value="1">Option #1</option>
-                                        <option value="2">Option #2</option>
-                                        <option value="3">Option #3</option>
+                                    <select id="select" class="form-control" name="tipe" required>
+                                        <option value="">Please select</option>
+                                        @if (!empty($data))
+                                        @foreach($data as $tipe)
+                                        <option value="{{ $tipe['id_tipe'] }}">{{ $tipe['nama_tipe'] }}</option>
+                                        @endforeach
+                                        @endif
                                     </select>
                                 </div>
                                 <div class="col-md-6">
                                     <label class=" form-control-label">Nomor Telepon</label>
                                     <div class="input-group">
-                                        <input class="form-control" type="number">
+                                        <input class="form-control" type="number" name="nomor" required>
                                     </div>
                                 </div>
                                 <div class="col-md-3">
                                     <label class=" form-control-label">Kode Parkir</label>
                                     <div class="input-group">
-                                        <input class="form-control" type="number">
+                                        <input class="form-control" type="number" name="kode-parkir">
                                     </div>
                                 </div>
                                 <div class="col-md-3">
                                     <label class=" form-control-label">Kode Ticket</label>
                                     <div class="input-group">
-                                        <input class="form-control" type="number">
+                                        <input class="form-control" type="number" name="kode-ticket">
                                     </div>
                                 </div>
                                 <small class="form-text text-muted text-right"><strong>**</strong>Jika tidak memiliki kode tiket/ Kode parkir maka dikenakan tarif normal</small>
                                 <br>
                                 <div class="col-md-3 offset-md-6">
-                                    <button id="payment-button" type="submit" class="btn btn-md btn-primary">
+                                    <button onclick="" type="submit" class="btn btn-md btn-primary">
                                         <i class="fa fa-save fa-lg"></i>&nbsp;
                                         <span id="payment-button-amount">Proses Booking</span>
                                         <span id="payment-button-sending" style="display:none;">Sending…</span>
@@ -93,4 +96,24 @@
         </div> <!-- .card -->
     </div>
 </div>
+<script type="text/javascript">
+    // For example trigger on button clicked, or any time you need
+    var payButton = document.getElementById('pay-button');
+    // payButton.addEventListener('click', function(event) {
+    $('#bayar').submit(function(event) {
+        // Trigger snap popup. @TODO: Replace TRANSACTION_TOKEN_HERE with your transaction token
+        event.preventDefault()
+        $.ajax({
+            type: "POST",
+            dataType: "html",
+            url: "{{ route('booking') }}",
+            data: $('#bayar').serialize(),
+            success: function(msg) {
+                window.snap.pay(msg);
+            }
+        });
+        // customer will be redirected after completing payment pop-up
+    });
+</script>
+
 @endsection

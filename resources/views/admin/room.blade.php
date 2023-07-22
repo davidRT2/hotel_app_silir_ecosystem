@@ -72,12 +72,12 @@
                 <div class="col-md-12">
                     <div class="page-header">
                         <div class="page-title">
-                            <h1>Data Pengunjung</h1>
+                            <h1>Data Kamar</h1>
                             <hr>
                             <div class="table-responsive">
                                 <table class="table table-striped table-bordered">
                                     @php
-                                    $no = 0;
+                                    $no = ($data2->currentPage() - 1) * $data2->perPage() + 1;
                                     @endphp
                                     <thead class="thead-dark">
                                         <tr>
@@ -91,7 +91,7 @@
                                     <tbody>
                                         @foreach($data2 as $item)
                                         <tr>
-                                            <td>{{ ++$no }}</td>
+                                            <td>{{ $no++ }}</td>
                                             <td>{{ $item['id_kamar'] }}</td>
                                             <td>{{ $item['nama_tipe'] }}</td>
                                             <td>Rp. {{ number_format($item['harga_per_malam'], 0, ',', ',') }}</td>
@@ -112,12 +112,16 @@
                                 </table>
                             </div>
                         </div>
+                        <div class="float-left">
+                            <p><strong>Jumlah Kamar : {{ $jumlahKamar }}</strong></p>
+                        </div>
+                        <div class="pagination justify-content-end">
+                            {{ $data2->appends(request()->query())->links('pagination::bootstrap-4') }}
+                        </div>
                     </div>
                 </div>
 
             </div>
-            <hr>
-            {{ $data2->appends(request()->query())->links('pagination::bootstrap-4') }}
         </div> <!-- .card -->
     </div>
     @endsection
