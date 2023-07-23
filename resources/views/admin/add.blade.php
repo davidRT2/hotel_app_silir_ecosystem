@@ -42,7 +42,7 @@
                                     <div class="input-group">
                                         <div class="input-group-addon"><i class="fa fa-calendar"></i></div>
                                         <input class="form-control" id="checkOut" type="date" name="check-out" required>
-                                        <input type="hidden" id="durasi" name="durasi" >
+                                        <input type="hidden" id="durasi" name="durasi">
                                     </div>
                                 </div>
                                 <div class="col-md-6">
@@ -65,19 +65,19 @@
                                 <div class="col-md-6">
                                     <label class=" form-control-label">Nomor Telepon</label>
                                     <div class="input-group">
-                                        <input class="form-control" type="number" name="nomor" required>
+                                        <input id="nomorTelepon" class="form-control" type="number" name="nomor" required>
                                     </div>
                                 </div>
                                 <div class="col-md-3">
                                     <label class=" form-control-label">Kode Parkir</label>
                                     <div class="input-group">
-                                        <input class="form-control" type="number" name="kode-parkir">
+                                        <input id="kodeParkir" class="form-control" type="number" name="kode-parkir">
                                     </div>
                                 </div>
                                 <div class="col-md-3">
                                     <label class=" form-control-label">Kode Ticket</label>
                                     <div class="input-group">
-                                        <input class="form-control" type="number" name="kode-ticket">
+                                        <input id="kodeTicket" class="form-control" type="number" name="kode-ticket">
                                     </div>
                                 </div>
                                 <small class="form-text text-muted text-right"><strong>**</strong>Jika tidak memiliki kode tiket/ Kode parkir maka dikenakan tarif normal</small>
@@ -109,7 +109,16 @@
             // Mengambil data form
             event.preventDefault()
             var formData = $("#bayar").serialize();
-            alert(formData);
+            var data = {
+                checkIn : $('#checkIn').val(),
+                checkOut : $('#checkOut').val(),
+                durasi : $('#durasi').val(),
+                nama : $('#input-nama').val(),
+                tipe : $('#select').val(),
+                nomor : $('#nomorTelepon').val(),
+                'kode-parkir' : $('#kodeParkir').val(),
+                'kode-ticket' : $('#kodeTicket').val()
+            }
             // Mengirim data form ke controller dengan AJAX
             $.ajax({
                 type: "POST",
@@ -122,7 +131,8 @@
                         onSuccess: function(result) {
                             /* You may add your own implementation here */
                             alert("payment success!");
-                            sendData(result);
+                            result['formData'] = data;
+                            sendDataBook(result);
                             // getRoom();
                         },
                         onPending: function(result) {
@@ -150,8 +160,7 @@
             });
         });
     });
-
-    function sendData(result){
+    function sendDataBook(result){
         document.getElementById('json_callback').value = JSON.stringify(result);
         $('#submit_form').submit();
     }

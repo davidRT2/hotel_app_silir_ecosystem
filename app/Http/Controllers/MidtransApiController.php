@@ -6,6 +6,8 @@ use Illuminate\Http\Request;
 use Midtrans\Config;
 use Midtrans\Snap;
 use GuzzleHttp\Client;
+use Illuminate\Support\Facades\Redirect;
+use Nette\Utils\Json;
 use SebastianBergmann\Environment\Console;
 
 class MidtransApiController extends Controller
@@ -40,7 +42,7 @@ class MidtransApiController extends Controller
             $firstName = implode(' ', array_slice($nama, 0, -1));
             $lastName = end($nama);
         }
-        
+
         $index = $request->input('tipe');
         $kamar = $this->getDetail($index);
         // print_r($kamar);
@@ -58,7 +60,7 @@ class MidtransApiController extends Controller
                     'id' => $request->input('tipe'),
                     'price' => $harga_per_malam,
                     'quantity' => $durasi,
-                    'name' => ' Hari '.$nama_kamar
+                    'name' => ' Hari ' . $nama_kamar
                 ]
             ),
             'customer_details' => array(
@@ -87,7 +89,134 @@ class MidtransApiController extends Controller
         return $data;
     }
 
-    public function payment_post(Request $request){
+    public function payment_post(Request $request)
+    {
+        // Ambil data dari $reques
+        $json = str_replace("\\", "", $request->input('json'));
+        $data = json_decode($json, true);
+        $formData = $data['formData'];
+        $apiRes = $data;
+        $tipe = $formData['tipe'];
+        $id_penginap = $this->generateID_penginap();
+        $nama_penginap = $formData['nama'];
+        $id_kamar = $this->autoKamar($tipe);
+        $durasi = $formData['durasi'];
+        $check_in = $formData['checkIn'];
+        $check_in = $formData['checkOut'];
+        $telepon = $formData['nomor'];
+        $kodeParkir = $formData['kode-parkir'];
+        $kodeTicket = $formData['kode-ticket'];
+        $client = new Client();
+        $url = $this->baseUrl . "penginap/";
+        $urlHistory = $this->baseUrl . "history";
+        $data = [
+            'id_penginap' => $id_penginap,
+            'nama_penginap' => $nama_penginap,
+            'id_kamar' => $id_kamar,
+            'durasi' => $durasi,
+            'check_in' => $check_in,
+            'telepon' => $telepon,
+        ];
+
+        try {
+            $response = $client->post($url, [
+                'json' => $data,
+                'headers' => [
+                    'Content-Type' => 'application/json',
+                ],
+                'verify' => false,
+            ]);
+            $responseBody = $response->getBody()->getContents();
+            // return response()->json(['message' => 'Data berhasil dikirim ke API'], 200);
+            return Redirect::route('admin.home')->with('success', 'Transaksi Berhasil');
+        } catch (\Exception $e) {
+            // return response()->json(['error' => 'Gagal mengirim data ke API'], 500);
+            return Redirect::route('admin.home')->with('eror', '500 Failed to send data to API');
+        }
         return $request;
+    }
+
+    public function autoKamar($x)
+    {
+        $client = new Client();
+        $url = $this->baseUrl . 'kamar';
+        $response = $client->request('GET', $url, [
+            'verify' => false, // Set it to true for valid SSL certificates
+        ]);
+        $responseBody = json_decode($response->getBody(), true);
+        $data = $responseBody['data'];
+
+        // Cari kamar dengan id_tipe yang sesuai
+        $filteredKamar = array_filter($data, function ($kamar) use ($x) {
+            return $kamar['id_tipe'] === $x;
+        });
+
+        // Cari kamar yang id_penginap == null
+        $availableKamar = array_values(array_filter($filteredKamar, function ($kamar) {
+            return $kamar['id_penginap'] === null;
+        }));
+
+        if (!empty($availableKamar)) {
+            // Jika ada kamar yang tersedia, kembalikan id kamar pertama yang ditemukan
+            return $availableKamar[0]['id_kamar'];
+        } else {
+            // Jika tidak ada kamar yang tersedia, kembalikan null atau nilai lain sesuai kebutuhan
+            return null;
+        }
+    }
+
+    public function generateID_penginap()
+    {
+        $data = $this->getPenginap();
+        $dataLength = count($data);
+
+        if ($dataLength > 0) {
+            // Ambil angka terakhir dari ID penginap saat ini
+            $lastID = intval(substr($data[$dataLength - 1]['id_penginap'], 1));
+
+            // Tambahkan 1 untuk mendapatkan angka berikutnya
+            $nextID = $lastID + 1;
+
+            // Format angka berikutnya menjadi ID penginap baru
+            $newID = 'P' . str_pad($nextID, 3, '0', STR_PAD_LEFT);
+        } else {
+            // Jika belum ada data, generate ID penginap pertama
+            $newID = 'P001';
+        }
+
+        return $newID;
+    }
+
+    public function payment_post_test(Request $request)
+    {
+        $json = str_replace("\\", "", $request->input('json'));
+        $data = json_decode($json, true);
+        $formData = $data['formData'];
+        $apiRes = $data;
+        return $data['gross_amount'];
+    }
+
+    public function getHistory()
+    {
+        $client = new Client();
+        $url = $this->baseUrl . 'history'; // Correct the URL here
+        $response = $client->request('GET', $url, [
+            'verify' => false, // Set it to true for valid SSL certificates
+        ]);
+        $responseBody = json_decode($response->getBody(), true);
+        $data = $responseBody['data'];
+        return $data;
+    }
+
+    public function getPenginap()
+    {
+        $client = new Client();
+        $url = $this->baseUrl . 'penginap/'; // Correct the URL here
+        $response = $client->request('GET', $url, [
+            'verify' => false, // Set it to true for valid SSL certificates
+        ]);
+        $responseBody = json_decode($response->getBody(), true);
+        $data = $responseBody['data'];
+        return $data;
     }
 }

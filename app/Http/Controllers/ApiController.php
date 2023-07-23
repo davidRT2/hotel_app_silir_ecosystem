@@ -4,12 +4,15 @@ namespace App\Http\Controllers;
 
 use Illuminate\Http\Request;
 use GuzzleHttp\Client;
+use Illuminate\Pagination\Paginator;
+use Illuminate\Support\Collection;
+use Illuminate\Pagination\LengthAwarePaginator;
 
 class ApiController extends Controller
 {
     private $baseUrl = "localhost:8080/api/v1/";
 
-    public function getDataPenginap()
+    public function getDataPenginap(Request $request)
     {
         $client = new Client();
         $url = $this->baseUrl . "penginap/";
@@ -26,8 +29,21 @@ class ApiController extends Controller
         $responKamar = json_decode($responKamar->getBody(), true);
         $dataKamar = $responKamar['data'];
         $responseBody = json_decode($response->getBody(), true);
-        $data = $responseBody['data'];
+        $data = $this->paginate($responseBody['data'], 5, null, [], $request->fullUrl());
         return view('admin.home', compact('data', 'dataKamar'));
+    }
+    public function paginate($items, $perPage = 5, $page = null, $options = [], $currentUrl)
+    {
+        $page = $page ?: (Paginator::resolveCurrentPage() ?: 1);
+        $items = $items instanceof Collection ? $items : Collection::make($items);
+
+        // Dapatkan URL saat ini dan hapus parameter 'page' dari URL
+        $currentUrl = strtok($currentUrl, '?');
+
+        return new LengthAwarePaginator($items->forPage($page, $perPage), $items->count(), $perPage, $page, [
+            'path' => $currentUrl, // Menggunakan URL saat ini tanpa parameter 'page'
+            // tambahkan opsi-opsi lainnya sesuai kebutuhan
+        ]);
     }
 
     public function getTipe()

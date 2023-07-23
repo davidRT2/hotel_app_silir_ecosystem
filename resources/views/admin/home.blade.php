@@ -129,50 +129,53 @@
                     <div class="page-title">
                         <h1>Data Pengunjung</h1>
                         <hr>
-                            <div class="table-responsive">
-                                <table class="table table-striped table-bordered">
-                                    @php
-                                    $no = 0;
-                                    @endphp
-                                    <thead class="thead-dark">
-                                        <tr>
-                                            <th>No</th>
-                                            <th>ID Pengunjung</th>
-                                            <th>ID Kamar</th>
-                                            <th>Nama</th>
-                                            <th>Telepon</th>
-                                            <th>Tanggal Masuk</th>
-                                            <th>Tanggal Keluar</th>
-                                            <th>Aksi</th>
-                                        </tr>
-                                    </thead>
-                                    <tbody>
-                                        @foreach($data as $item)
-                                        <tr>
-                                            <td>{{ ++$no }}</td>
-                                            <td>{{ $item['id_penginap'] }}</td>
-                                            <td>{{ $item['id_kamar']}}</td>
-                                            <td>{{ $item['nama_penginap'] }}</td>
-                                            <td>{{ $item['telepon'] }}</td>
-                                            <td>{{ \Carbon\Carbon::parse($item['check_in'])->format('Y-m-d H:i') }}</td>
-                                            <td>
-                                                <?php
-                                                // Calculate the checkout date
-                                                $checkInDate = \Carbon\Carbon::parse($item['check_in']);
-                                                $duration = $item['durasi']; // Assuming 'durasi' is the column for duration
-                                                $checkoutDate = $checkInDate->copy()->addDays($duration);
-                                                ?>
-                                                {{ $checkoutDate->format('Y-m-d H:i') }}
-                                            </td>
-                                            <td>
-                                                <button type="button" class="btn-sm btn-danger" data-toggle="modal" data-target="#ModalCheckout">checkout</button>
-                                                <button type="button" class="btn-sm btn-primary" data-toggle="modal" data-target="#ModalPerpanjang">Perpanjang</button>
-                                            </td>
-                                        </tr>
-                                        @endforeach
-                                    </tbody>
-                                </table>
-                            </div>
+                        <div class="table-responsive">
+                            <table class="table table-striped table-bordered">
+                                @php
+                                $no = 0;
+                                @endphp
+                                <thead class="thead-dark">
+                                    <tr>
+                                        <th>No</th>
+                                        <th>ID Pengunjung</th>
+                                        <th>ID Kamar</th>
+                                        <th>Nama</th>
+                                        <th>Telepon</th>
+                                        <th>Tanggal Masuk</th>
+                                        <th>Tanggal Keluar</th>
+                                        <th>Aksi</th>
+                                    </tr>
+                                </thead>
+                                <tbody>
+                                    @foreach($data as $item)
+                                    <tr>
+                                        <td>{{ ++$no }}</td>
+                                        <td>{{ $item['id_penginap'] }}</td>
+                                        <td>{{ $item['id_kamar']}}</td>
+                                        <td>{{ $item['nama_penginap'] }}</td>
+                                        <td>{{ $item['telepon'] }}</td>
+                                        <td>{{ \Carbon\Carbon::parse($item['check_in'])->format('Y-m-d H:i') }}</td>
+                                        <td>
+                                            <?php
+                                            // Calculate the checkout date
+                                            $checkInDate = \Carbon\Carbon::parse($item['check_in']);
+                                            $duration = $item['durasi']; // Assuming 'durasi' is the column for duration
+                                            $checkoutDate = $checkInDate->copy()->addDays($duration);
+                                            ?>
+                                            {{ $checkoutDate->format('Y-m-d H:i') }}
+                                        </td>
+                                        <td>
+                                            <button type="button" class="btn-sm btn-danger" data-toggle="modal" data-target="#ModalCheckout">checkout</button>
+                                            <button type="button" class="btn-sm btn-primary" data-toggle="modal" data-target="#ModalPerpanjang">Perpanjang</button>
+                                        </td>
+                                    </tr>
+                                    @endforeach
+                                </tbody>
+                            </table>
+                        </div>
+                    </div>
+                    <div class="pagination justify-content-end">
+                        {{ $data->appends(request()->query())->links('pagination::bootstrap-4') }}
                     </div>
                 </div>
             </div>
@@ -302,4 +305,4 @@
                 </div>
             </div>
         </div>
-@endsection 
+        @endsection

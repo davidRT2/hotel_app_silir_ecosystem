@@ -102,5 +102,5 @@ class RoomController extends Controller
             // Gagal mengirim data ke API
             return Redirect::route('room-index')->with('eror', '500 Failed to send data to API');
         }
-    }
+    }   
 }
