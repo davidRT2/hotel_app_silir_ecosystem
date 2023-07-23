@@ -10,7 +10,7 @@ use Illuminate\Pagination\LengthAwarePaginator;
 
 class ApiController extends Controller
 {
-    private $baseUrl = "localhost:8080/api/v1/";
+    private $baseUrl = "192.168.27.115:8080/api/v1/";
 
     public function getDataPenginap(Request $request)
     {
@@ -29,8 +29,9 @@ class ApiController extends Controller
         $responKamar = json_decode($responKamar->getBody(), true);
         $dataKamar = $responKamar['data'];
         $responseBody = json_decode($response->getBody(), true);
+        $jumlahPenginap = count($responseBody['data']);
         $data = $this->paginate($responseBody['data'], 5, null, [], $request->fullUrl());
-        return view('admin.home', compact('data', 'dataKamar'));
+        return view('admin.home', compact('data', 'dataKamar', 'jumlahPenginap'));
     }
     public function paginate($items, $perPage = 5, $page = null, $options = [], $currentUrl)
     {

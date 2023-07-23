@@ -13,7 +13,7 @@ use SebastianBergmann\Environment\Console;
 class MidtransApiController extends Controller
 {
     //
-    private $baseUrl = "localhost:8080/api/v1/";
+    private $baseUrl = "192.168.27.115:8080/api/v1/";
     public function index()
     {
         $client = new Client();
@@ -91,7 +91,7 @@ class MidtransApiController extends Controller
 
     public function payment_post(Request $request)
     {
-        // Ambil data dari $reques
+        // Ambil data dari $request
         $json = str_replace("\\", "", $request->input('json'));
         $data = json_decode($json, true);
         $formData = $data['formData'];
@@ -102,25 +102,45 @@ class MidtransApiController extends Controller
         $id_kamar = $this->autoKamar($tipe);
         $durasi = $formData['durasi'];
         $check_in = $formData['checkIn'];
-        $check_in = $formData['checkOut'];
+        $check_out = $formData['checkOut'];
         $telepon = $formData['nomor'];
+        $gross_amount = $data['gross_amount'];
         $kodeParkir = $formData['kode-parkir'];
         $kodeTicket = $formData['kode-ticket'];
         $client = new Client();
         $url = $this->baseUrl . "penginap/";
         $urlHistory = $this->baseUrl . "history";
-        $data = [
+        $dataPenginap = [
             'id_penginap' => $id_penginap,
             'nama_penginap' => $nama_penginap,
             'id_kamar' => $id_kamar,
             'durasi' => $durasi,
             'check_in' => $check_in,
             'telepon' => $telepon,
+            'status' => 1
+        ];
+        $dataHistory = [
+            'id_penginap' => $id_penginap,
+            'id_kamar' => $id_kamar,
+            'durasi' => $durasi,
+            'check_in' => $check_in,
+            'check_out' => $check_out,
+            'total_bayar' => $gross_amount,
+            'penalty' => 0,
+            'waktu' => '', // Isi dengan nilai waktu yang sesuai
+            'status' => 0 // Isi dengan nilai status yang sesuai
         ];
 
         try {
+            $historyResponse = $client->post($urlHistory, [
+                'json' => $dataHistory,
+                'headers' => [
+                    'Content-Type' => 'application/json',
+                ],
+                'verify' => false,
+            ]);
             $response = $client->post($url, [
-                'json' => $data,
+                'json' => $dataPenginap,
                 'headers' => [
                     'Content-Type' => 'application/json',
                 ],
@@ -131,10 +151,10 @@ class MidtransApiController extends Controller
             return Redirect::route('admin.home')->with('success', 'Transaksi Berhasil');
         } catch (\Exception $e) {
             // return response()->json(['error' => 'Gagal mengirim data ke API'], 500);
-            return Redirect::route('admin.home')->with('eror', '500 Failed to send data to API');
+            return Redirect::route('admin.home')->with('error', '500 Failed to send data to API');
         }
-        return $request;
     }
+
 
     public function autoKamar($x)
     {
