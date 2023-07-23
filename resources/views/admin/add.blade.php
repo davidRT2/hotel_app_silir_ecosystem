@@ -34,14 +34,15 @@
                                     <label class=" form-control-label">Check In</label>
                                     <div class="input-group">
                                         <div class="input-group-addon"><i class="fa fa-calendar"></i></div>
-                                        <input class="form-control" type="date" name="check-in" required>
+                                        <input class="form-control" id="checkIn" type="date" name="check-in" required>
                                     </div>
                                 </div>
                                 <div class="col-md-6">
                                     <label class=" form-control-label">Check Out</label>
                                     <div class="input-group">
                                         <div class="input-group-addon"><i class="fa fa-calendar"></i></div>
-                                        <input class="form-control" type="date" name="check-out" required>
+                                        <input class="form-control" id="checkOut" type="date" name="check-out" required>
+                                        <input type="hidden" id="durasi" name="durasi" >
                                     </div>
                                 </div>
                                 <div class="col-md-6">
@@ -52,7 +53,6 @@
                                 </div>
                                 <div class="col-md-6">
                                     <label class=" form-control-label">Tipe Kamar</label>
-                                    <input type="hidden" name="namaKamar" id="namaKamar">
                                     <select id="select" class="form-control" name="tipe" required>
                                         @if (!empty($data))
                                         <option value="">Please select</option>
@@ -83,7 +83,7 @@
                                 <small class="form-text text-muted text-right"><strong>**</strong>Jika tidak memiliki kode tiket/ Kode parkir maka dikenakan tarif normal</small>
                                 <br>
                                 <div class="col-md-3 offset-md-6">
-                                    <button onclick="" type="submit" class="btn btn-md btn-primary">
+                                    <button id="tombol" onclick="" type="submit" class="btn btn-md btn-primary">
                                         <i class="fa fa-save fa-lg"></i>&nbsp;
                                         <span id="payment-button-amount">Proses Booking</span>
                                         <span id="payment-button-sending" style="display:none;">Sending…</span>
@@ -91,6 +91,10 @@
                                 </div>
                         </form>
                     </div>
+                    <form action="{{ route('pay.post') }}" method="POST" id="submit_form">
+                        @csrf
+                        <input type="hidden" name="json" id="json_callback">
+                    </form>
                 </div>
 
             </div>
@@ -100,29 +104,76 @@
 <script type="text/javascript">
     // For example trigger on button clicked, or any time you need
     // payButton.addEventListener('click', function(event) {
-    $('#bayar').submit(function(event) {
-        // Trigger snap popup. @TODO: Replace TRANSACTION_TOKEN_HERE with your transaction token
-        event.preventDefault()
-        $.ajax({
-            type: "POST",
-            dataType: "html",
-            url: "{{ route('booking') }}",
-            data: $('#bayar').serialize(),
-            success: function(msg) {
-                window.snap.pay(msg);
-            }
+    $(document).ready(function() {
+        $("#bayar").submit(function(event) {
+            // Mengambil data form
+            event.preventDefault()
+            var formData = $("#bayar").serialize();
+            alert(formData);
+            // Mengirim data form ke controller dengan AJAX
+            $.ajax({
+                type: "POST",
+                dataType: "html",
+                url: "{{ route('booking') }}",
+                data: formData,
+                success: function(msg) {
+                    // Berhasil, lakukan sesuatu jika perlu
+                    window.snap.pay(msg, {
+                        onSuccess: function(result) {
+                            /* You may add your own implementation here */
+                            alert("payment success!");
+                            sendData(result);
+                            // getRoom();
+                        },
+                        onPending: function(result) {
+                            /* You may add your own implementation here */
+                            alert("waiting for your payment!");
+                            console.log(result);
+                        },
+                        onError: function(result) {
+                            /* You may add your own implementation here */
+                            alert("payment failed!");
+                            console.log(result);
+                        },
+                        onClose: function() {
+                            /* You may add your own implementation here */
+                            alert('you closed the popup without finishing the payment');
+                        }
+                    });
+                },
+                error: function(xhr, status, error) {
+                    // Error handling code here
+                    console.log("Ajax request failed!");
+                    console.log("Status: " + status);
+                    console.log("Error message: " + error);
+                }
+            });
         });
-        // customer will be redirected after completing payment pop-up
     });
+
+    function sendData(result){
+        document.getElementById('json_callback').value = JSON.stringify(result);
+        $('#submit_form').submit();
+    }
 </script>
 
 <script>
-    $(document).ready(function(){
-        $('#select').change(function(){
-            var kamar = $(this).val();
-            $('#namaKamar').val(kamar);
-        });
-    });
-</script>
+    $('#checkOut').change(function() {
+        var checkIn = $('#checkIn').val();
+        var checkOut = $('#checkOut').val();
 
+        // Convert date strings to Date objects
+        const checkinDate = new Date(checkIn);
+        const checkoutDate = new Date(checkOut);
+
+        // Calculate the time difference in milliseconds
+        const timeDiff = checkoutDate - checkinDate;
+
+        // Convert milliseconds to days
+        const numberOfDays = timeDiff / (1000 * 60 * 60 * 24);
+
+        // Set the calculated duration in the "durasi" input
+        $('#durasi').val(numberOfDays);
+    })
+</script>
 @endsection
