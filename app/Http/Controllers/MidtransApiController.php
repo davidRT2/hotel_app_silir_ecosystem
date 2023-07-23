@@ -6,12 +6,14 @@ use Illuminate\Http\Request;
 use Midtrans\Config;
 use Midtrans\Snap;
 use GuzzleHttp\Client;
+use SebastianBergmann\Environment\Console;
 
 class MidtransApiController extends Controller
 {
     //
     private $baseUrl = "localhost:8080/api/v1/";
-    public function index(){
+    public function index()
+    {
         $client = new Client();
         $url = $this->baseUrl . 'tipe';
         $response = $client->request('GET', $url, [
@@ -31,36 +33,42 @@ class MidtransApiController extends Controller
         Config::$isSanitized = true;
         // Set3DStransaction for credit card to true
         Config::$is3ds = true;
-        $nama = explode(' ',$request->input('nama'));
+        $nama = explode(' ', $request->input('nama'));
         $firstName = $nama[0];
-        $lastName = $nama[1];
-        if(count($nama) > 2){
-            $firstName = $nama[0] .' '. $nama[1];
-            $lastName = $nama[2];
+        $lastName = '';
+        if (count($nama) > 1) {
+            $firstName = implode(' ', array_slice($nama, 0, -1));
+            $lastName = end($nama);
         }
-        $index = $request->input('namaKamar');
+        
+        $index = $request->input('tipe');
         $kamar = $this->getDetail($index);
         // print_r($kamar);
+        $durasi = $request->input('durasi');
+        $nama_kamar = $kamar[0]['nama_tipe'];
+        $harga_per_malam = $kamar[0]['harga_per_malam'];
+        $gross_amount = ($durasi * $harga_per_malam);
         $params = array(
             'transaction_details' => array(
                 'order_id' => rand(),
-                'gross_amount' => $kamar[0]['harga_per_malam'],
+                'gross_amount' => $gross_amount,
             ),
             'item_details' => array(
                 [
-                    'id' => 'A1',
-                    'price' => $kamar[0]['harga_per_malam'],
-                    'quantity' => 1,
-                    'name' => $kamar[0]['nama_tipe']
+                    'id' => $request->input('tipe'),
+                    'price' => $harga_per_malam,
+                    'quantity' => $durasi,
+                    'name' => ' Hari '.$nama_kamar
                 ]
             ),
             'customer_details' => array(
                 'first_name' => $firstName,
                 'last_name' => $lastName,
-                'email' => 'example@gmail.com',
-                'phone' => $request->input('nomor'),
+                'email' => 'herepfc@gmail.com',
+                'phone' => $request->input('nomor')
             ),
         );
+        // self::$params = $params;
 
         $snapToken = Snap::getSnapToken($params);
         return $snapToken;
@@ -70,7 +78,7 @@ class MidtransApiController extends Controller
     public function getDetail($id)
     {
         $client = new Client();
-        $url = $this->baseUrl . 'tipe/' . $id ; // Correct the URL here
+        $url = $this->baseUrl . 'tipe/' . $id; // Correct the URL here
         $response = $client->request('GET', $url, [
             'verify' => false, // Set it to true for valid SSL certificates
         ]);
@@ -79,4 +87,7 @@ class MidtransApiController extends Controller
         return $data;
     }
 
+    public function payment_post(Request $request){
+        return $request;
+    }
 }
