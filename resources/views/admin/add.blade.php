@@ -24,8 +24,9 @@
             <div class="card">
                 <div class="card-body">
                     <!-- Credit Card -->
-                    <div id="pay-invoice">
-                        <form action="" method="post" novalidate="novalidate">
+                    <div>
+                        <form action="{{ route('booking') }}" method="post" id="bayar">
+                            @csrf
                             <div class="form-group text-center">
                             </div>
                             <div class="form-group">
@@ -33,63 +34,147 @@
                                     <label class=" form-control-label">Check In</label>
                                     <div class="input-group">
                                         <div class="input-group-addon"><i class="fa fa-calendar"></i></div>
-                                        <input class="form-control" type="date">
+                                        <input class="form-control" id="checkIn" type="date" name="check-in" required>
                                     </div>
                                 </div>
                                 <div class="col-md-6">
                                     <label class=" form-control-label">Check Out</label>
                                     <div class="input-group">
                                         <div class="input-group-addon"><i class="fa fa-calendar"></i></div>
-                                        <input class="form-control" type="date">
+                                        <input class="form-control" id="checkOut" type="date" name="check-out" required>
+                                        <input type="hidden" id="durasi" name="durasi" >
                                     </div>
                                 </div>
+                                <input type="hidden" id="durasi" name="durasi">
                                 <div class="col-md-6">
                                     <label class=" form-control-label">Nama</label>
                                     <div class="input-group">
-                                        <input class="form-control" type="text">
+                                        <input class="form-control" id="input-nama" type="text" name="nama" required>
                                     </div>
                                 </div>
                                 <div class="col-md-6">
                                     <label class=" form-control-label">Tipe Kamar</label>
-                                    <select name="select" id="select" class="form-control">
-                                        <option value="0">Please select</option>
-                                        <option value="1">Option #1</option>
-                                        <option value="2">Option #2</option>
-                                        <option value="3">Option #3</option>
+                                    <select id="select" class="form-control" name="tipe" required>
+                                        @if (!empty($data))
+                                        <option value="">Please select</option>
+                                        @foreach($data as $tipe)
+                                        <option value="{{ $tipe['id_tipe'] }}">{{ $tipe['nama_tipe'] }}</option>
+                                        @endforeach
+                                        @endif
                                     </select>
                                 </div>
                                 <div class="col-md-6">
                                     <label class=" form-control-label">Nomor Telepon</label>
                                     <div class="input-group">
-                                        <input class="form-control" type="number">
+                                        <input class="form-control" type="number" name="nomor" required>
                                     </div>
                                 </div>
                                 <div class="col-md-3">
                                     <label class=" form-control-label">Kode Parkir</label>
                                     <div class="input-group">
-                                        <input class="form-control" type="number">
+                                        <input class="form-control" type="number" name="kode-parkir">
                                     </div>
                                 </div>
                                 <div class="col-md-3">
                                     <label class=" form-control-label">Kode Ticket</label>
                                     <div class="input-group">
-                                        <input class="form-control" type="number">
+                                        <input class="form-control" type="number" name="kode-ticket">
                                     </div>
                                 </div>
                                 <small class="form-text text-muted text-right"><strong>**</strong>Jika tidak memiliki kode tiket/ Kode parkir maka dikenakan tarif normal</small>
+                                <br>
                                 <div class="col-md-3 offset-md-6">
-                                    <button id="payment-button" type="submit" class="btn btn-lg btn-warning btn-block">
+                                    <button id="tombol" onclick="" type="submit" class="btn btn-md btn-primary">
                                         <i class="fa fa-save fa-lg"></i>&nbsp;
-                                        <span id="payment-button-amount">Proses Pesanan</span>
+                                        <span id="payment-button-amount">Proses Booking</span>
                                         <span id="payment-button-sending" style="display:none;">Sending…</span>
                                     </button>
                                 </div>
                         </form>
                     </div>
+                    <form action="{{ route('pay.post') }}" method="POST" id="submit_form">
+                        @csrf
+                        <input type="hidden" name="json" id="json_callback">
+                    </form>
                 </div>
 
             </div>
         </div> <!-- .card -->
     </div>
 </div>
+<script type="text/javascript">
+    // For example trigger on button clicked, or any time you need
+    // payButton.addEventListener('click', function(event) {
+    $(document).ready(function() {
+        $("#bayar").submit(function(event) {
+            // Mengambil data form
+            event.preventDefault()
+            var formData = $("#bayar").serialize();
+            alert(formData);
+            // Mengirim data form ke controller dengan AJAX
+            $.ajax({
+                type: "POST",
+                dataType: "html",
+                url: "{{ route('booking') }}",
+                data: formData,
+                success: function(msg) {
+                    // Berhasil, lakukan sesuatu jika perlu
+                    window.snap.pay(msg, {
+                        onSuccess: function(result) {
+                            /* You may add your own implementation here */
+                            alert("payment success!");
+                            sendData(result);
+                            // getRoom();
+                        },
+                        onPending: function(result) {
+                            /* You may add your own implementation here */
+                            alert("waiting for your payment!");
+                            console.log(result);
+                        },
+                        onError: function(result) {
+                            /* You may add your own implementation here */
+                            alert("payment failed!");
+                            console.log(result);
+                        },
+                        onClose: function() {
+                            /* You may add your own implementation here */
+                            alert('you closed the popup without finishing the payment');
+                        }
+                    });
+                },
+                error: function(xhr, status, error) {
+                    // Error handling code here
+                    console.log("Ajax request failed!");
+                    console.log("Status: " + status);
+                    console.log("Error message: " + error);
+                }
+            });
+        });
+    });
+
+    function sendData(result){
+        document.getElementById('json_callback').value = JSON.stringify(result);
+        $('#submit_form').submit();
+    }
+</script>
+
+<script>
+    $('#checkOut').change(function() {
+        var checkIn = $('#checkIn').val();
+        var checkOut = $('#checkOut').val();
+
+        // Convert date strings to Date objects
+        const checkinDate = new Date(checkIn);
+        const checkoutDate = new Date(checkOut);
+
+        // Calculate the time difference in milliseconds
+        const timeDiff = checkoutDate - checkinDate;
+
+        // Convert milliseconds to days
+        const numberOfDays = timeDiff / (1000 * 60 * 60 * 24);
+
+        // Set the calculated duration in the "durasi" input
+        $('#durasi').val(numberOfDays);
+    })
+</script>
 @endsection

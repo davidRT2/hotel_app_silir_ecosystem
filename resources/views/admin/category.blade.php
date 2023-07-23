@@ -23,63 +23,66 @@
         <div class="col-md-12">
             <div class="card">
                 <div class="card-body">
-                    <!-- add-Room Form -->
-                    <div>
-                        <form action="{{ route('add-room') }}" method="post">
-                            @csrf
+                    <!-- Credit Card -->
+                    <div id="pay-invoice">
+                        <form action="" method="post" novalidate="novalidate">
                             <div class="form-group text-center">
                             </div>
                             <div class="form-group">
                                 <div class="row">
-                                    <div class="col-md-3">
+
+
+                                    <div class="col-md-2">
                                         <label class=" form-control-label">Prefix Kode Kamar</label>
                                         <div class="input-group">
-                                            <input class="form-control" type="text" name="prefix" required>
+                                            <input class="form-control" type="text">
                                         </div>
-                                        <small class="form-text text-muted text-left"><strong>**</strong>Karakter untuk awalan IDKamar <b>Contoh K/KJ = K001/KJ001</b></small>
                                     </div>
-                                    <div class="col-md-3">
-                                        <label class=" form-control-label">Jumlah kamar</label>
-                                        <div class="input-group">
-                                            <input class="form-control" type="number" min="1" pattern="^[0-9]+$" oninput="validateInput(this)" name="room-amount" required>
-                                        </div>
-                                        <small class="form-text text-muted text-left"><strong>**</strong>Jumlah Kamar maksimal ditambahkan 20 Unit</small>
-                                    </div>
-                                    <div class="offset-md-6"></div>
-                                    <div class="col-md-6">
+                                    <div class="col-md-6 offset-md-4">
                                         <label class=" form-control-label">Tipe Kamar</label>
-                                        <select id="select" class="form-control" name="room-type" required>
+                                        <select name="select" id="select" class="form-control">
                                             <option value="">Please select</option>
                                             @foreach($data as $tipe)
                                             <option value="{{ $tipe['id_tipe'] }}">{{ $tipe['nama_tipe'] }}</option>
                                             @endforeach
                                         </select>
                                     </div>
+                                    <div class="col-md-6">
+                                        <label class=" form-control-label">Jumlah kamar</label>
+                                        <div class="input-group">
+                                            <input class="form-control"  type="number" min="0" pattern="^[0-9]+$" oninput="validateInput(this)">
+                                        </div>
+                                    </div>
+                                    <div class="col-md-6">
+                                        <label class=" form-control-label">Harga kamar</label>
+                                        <div class="input-group">
+                                            <div class="input-group-addon"><i class="fa fa-money"></i></div>
+                                            <input class="form-control" type="text" id="rupiah" oninput="formatRupiah(this)">
+                                        </div>
+                                    </div>
                                 </div>
                                 <br>
-                                <div class="col-md-3 offset-md-10">
-                                    <button id="payment-button" type="submit" class="btn btn-md btn-primary">
-                                        <i class="fa fa-save fa-lg"></i>
-                                        <span>Simpan Data</span>
+                                <div class="col-md-3 offset-md-6">
+                                    <button id="payment-button" type="submit" class="btn btn-md btn-warning">
+                                        <i class="fa fa-save fa-lg"></i>&nbsp;
+                                        <span id="payment-button-amount">Simpan Data</span>
+                                        <span id="payment-button-sending" style="display:none;">Sending…</span>
                                     </button>
                                 </div>
                         </form>
                     </div>
                 </div>
             </div>
-            <hr>
             <div class="breadcrumbs">
                 <div class="col-md-12">
                     <div class="page-header">
                         <div class="page-title">
-                            <h1>Data Kamar</h1>
-                            <hr>
-                            <div class="table-responsive">
-                                <table class="table table-striped table-bordered">
+                            <div class="table">
+                                <table class="table table-striped">
                                     @php
-                                    $no = ($data2->currentPage() - 1) * $data2->perPage() + 1;
+                                    $no = 0;
                                     @endphp
-                                    <thead class="thead-dark">
+                                    <thead>
                                         <tr>
                                             <th>No</th>
                                             <th>ID Kamar</th>
@@ -91,10 +94,10 @@
                                     <tbody>
                                         @foreach($data2 as $item)
                                         <tr>
-                                            <td>{{ $no++ }}</td>
+                                            <td>{{ ++$no }}</td>
                                             <td>{{ $item['id_kamar'] }}</td>
                                             <td>{{ $item['nama_tipe'] }}</td>
-                                            <td>Rp. {{ number_format($item['harga_per_malam'], 0, ',', ',') }}</td>
+                                            <td>{{ $item['harga_per_malam'] }}</td>
                                             <td>
                                                 @if ($item['id_penginap'] === null)
                                                 <span class="badge badge-success">Tersedia</span>
@@ -112,16 +115,11 @@
                                 </table>
                             </div>
                         </div>
-                        <div class="float-left">
-                            <p><strong>Jumlah Kamar : {{ $jumlahKamar }}</strong></p>
-                        </div>
-                        <div class="pagination justify-content-end">
-                            {{ $data2->appends(request()->query())->links('pagination::bootstrap-4') }}
-                        </div>
                     </div>
                 </div>
 
             </div>
         </div> <!-- .card -->
     </div>
-    @endsection
+</div>
+@endsection

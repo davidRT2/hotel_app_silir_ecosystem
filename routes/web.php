@@ -3,6 +3,10 @@
 use Illuminate\Support\Facades\Route;
 
 use App\Http\Controllers\ApiController;
+use App\Http\Controllers\MidtransApiController;
+use App\Http\Controllers\RoomController;
+use Illuminate\Routing\RouteRegistrar;
+
 /*
 |--------------------------------------------------------------------------
 | Web Routes
@@ -43,14 +47,7 @@ Route::get('/detail-kamar/{id}', [ApiController::class, 'getDetailKamar'])->name
 Route::post('/checkout', [ApiController::class, 'checkout'])->name('checkout');
 
 //dapid
-
-Route::get('admin/home', function () {
-    return view('admin.home');
-});
-
-Route::get('admin/add', function () {
-    return view('admin.add');
-});
+Route::get('admin/home', [ApiController::class, 'getDataPenginap']);
 
 Route::get('admin/history', function () {
     return view('admin.history');
@@ -60,6 +57,22 @@ Route::get('admin/income', function () {
     return view('admin.income');
 });
 
-Route::get('admin/room', function () {
-    return view('admin.room');
-});
+/**
+ * Kamar Route Start
+ */
+Route::get('admin/room', [RoomController::class, 'index'])->name('room-index');
+Route::post('admin/room', [RoomController::class, 'add'])->name('add-room');
+/**
+ * Kamar Route End
+ */
+
+/**
+ * Payment Admin Gateway start
+ */
+Route::get('admin/checkout', [MidtransApiController::class, 'index'])->name('checkout-index');
+Route::post('admin/booking', [MidtransApiController::class, 'booking'])->name('booking');
+Route::post('payment', [MidtransApiController::class, 'payment_post'])->name('pay.post');
+Route::get('testing/{id}', [MidtransApiController::class, 'getDetail']);
+/**
+ * Payment Admin Gateway End
+ */

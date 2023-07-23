@@ -4,6 +4,7 @@
 <head>
     <title>Hotel Silir</title>
     <link rel="icon" href="{{ asset('img/logo.jpeg') }}" type="image/png">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
 
     <link href="https://fonts.googleapis.com/css?family=Merriweather:300,400|Montserrat:400,700" rel="stylesheet">
     <link rel="stylesheet" href="{{ asset('css/animate.css') }}">
@@ -44,7 +45,7 @@
                                     <li class="{{ Request::is('reservation') ? 'active' : '' }}"><a href="{{ route('reservation.index') }}">Reservation</a></li>
                                     <li class="{{ Request::is('gallery') ? 'active' : '' }}"><a href="{{ route('gallery') }}">Gallery</a></li>
                                     <li class="{{ Request::is('contact') ? 'active' : '' }}"><a href="{{ route('contactus') }}">Contact</a></li>
-                                    <li class="{{ Request::is('admin/home') ? 'active' : '' }}"><a href="{{ url('admin/home') }}">Login</a></li>
+                                    <li class="{{ Request::is('admin/home') ? 'active' : '' }}"><a href="{{ url('admin/income') }}">Login</a></li>
                                 </ul>
                             </div>
                         </div>

@@ -7,7 +7,7 @@ use GuzzleHttp\Client;
 
 class ApiController extends Controller
 {
-    private $baseUrl = "https://4ff5-103-162-237-197.ngrok-free.app/api/v1/";
+    private $baseUrl = "localhost:8080/api/v1/";
 
     public function getDataPenginap()
     {
@@ -18,9 +18,16 @@ class ApiController extends Controller
             'verify' => false,
         ]);
 
-        $responseBody = json_decode($response->getBody(), true);
+        $urlKamar = $this->baseUrl . "kamar";
 
-        return view('debug.detailKamar', compact('responseBody'));
+        $responKamar = $client->request('GET', $urlKamar, [
+            'verify' => false,
+        ]);
+        $responKamar = json_decode($responKamar->getBody(), true);
+        $dataKamar = $responKamar['data'];
+        $responseBody = json_decode($response->getBody(), true);
+        $data = $responseBody['data'];
+        return view('admin.home', compact('data', 'dataKamar'));
     }
 
     public function getTipe()
