@@ -10,7 +10,7 @@ use Illuminate\Pagination\LengthAwarePaginator;
 
 class ApiController extends Controller
 {
-    private $baseUrl = "localhost:8080/api/v1/";
+    private $baseUrl = "http://192.168.27.115:8080/api/v1/";
 
     public function getDataPenginap(Request $request)
     {

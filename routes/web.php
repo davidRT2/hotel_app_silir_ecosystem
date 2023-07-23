@@ -77,3 +77,9 @@ Route::get('testing', [MidtransApiController::class, 'generateID_penginap']);
 /**
  * Payment Admin Gateway End
  */
+/**
+ * Payment user Gateway Start
+ */
+/**
+ * Payment user Gateway End
+ */

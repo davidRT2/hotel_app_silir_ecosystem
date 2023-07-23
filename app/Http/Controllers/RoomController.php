@@ -14,7 +14,7 @@ use Illuminate\Pagination\LengthAwarePaginator;
 class RoomController extends Controller
 {
     //
-    private $baseUrl = "localhost:8080/api/v1/";
+    private $baseUrl = "http://192.168.27.115:8080/api/v1/";
 
     public function index(Request $request)
     {
@@ -102,5 +102,5 @@ class RoomController extends Controller
             // Gagal mengirim data ke API
             return Redirect::route('room-index')->with('eror', '500 Failed to send data to API');
         }
-    }   
+    }
 }
