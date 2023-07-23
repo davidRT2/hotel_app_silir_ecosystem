@@ -44,7 +44,7 @@
                     </div>
                     <h4 class="mb-0">
                         <i class="fa-solid fa-face-smile"></i>
-                        <span class="count">{{ count($data) }}</span>
+                        <span class="count">{{ $jumlahPenginap }}</span>
                     </h4>
                     <h4 class="text-light">Jumlah Penginap Saat Ini</h4>
 
@@ -132,7 +132,7 @@
                         <div class="table-responsive">
                             <table class="table table-striped table-bordered">
                                 @php
-                                $no = 0;
+                                $no = ($data->currentPage() - 1) * $data->perPage() + 1;
                                 @endphp
                                 <thead class="thead-dark">
                                     <tr>
@@ -148,13 +148,14 @@
                                 </thead>
                                 <tbody>
                                     @foreach($data as $item)
+                                    @if ($item['status'])
                                     <tr>
-                                        <td>{{ ++$no }}</td>
+                                        <td>{{ $no++ }}</td>
                                         <td>{{ $item['id_penginap'] }}</td>
                                         <td>{{ $item['id_kamar']}}</td>
                                         <td>{{ $item['nama_penginap'] }}</td>
                                         <td>{{ $item['telepon'] }}</td>
-                                        <td>{{ \Carbon\Carbon::parse($item['check_in'])->format('Y-m-d H:i') }}</td>
+                                        <td>{{ \Carbon\Carbon::parse($item['check_in'])->format('Y-m-d') }}</td>
                                         <td>
                                             <?php
                                             // Calculate the checkout date
@@ -162,13 +163,15 @@
                                             $duration = $item['durasi']; // Assuming 'durasi' is the column for duration
                                             $checkoutDate = $checkInDate->copy()->addDays($duration);
                                             ?>
-                                            {{ $checkoutDate->format('Y-m-d H:i') }}
+                                            {{ $checkoutDate->format('Y-m-d') }}
                                         </td>
                                         <td>
                                             <button type="button" class="btn-sm btn-danger" data-toggle="modal" data-target="#ModalCheckout">checkout</button>
                                             <button type="button" class="btn-sm btn-primary" data-toggle="modal" data-target="#ModalPerpanjang">Perpanjang</button>
                                         </td>
                                     </tr>
+                                    @else continue
+                                    @endif
                                     @endforeach
                                 </tbody>
                             </table>
