@@ -7,7 +7,7 @@ use GuzzleHttp\Client;
 
 class ApiController extends Controller
 {
-    private $baseUrl = "https://bca5-103-162-237-197.ngrok-free.app/api/v1/";
+    private $baseUrl = "https://4ff5-103-162-237-197.ngrok-free.app/api/v1/";
 
     public function getDataPenginap()
     {
