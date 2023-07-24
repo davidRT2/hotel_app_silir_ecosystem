@@ -12,7 +12,6 @@
     <title>@yield('title') - Website Inventory</title>
     <meta name="description" content="Sufee Admin - HTML5 Admin Template">
     <meta name="viewport" content="width=device-width, initial-scale=1">
-    <meta http-equiv="Content-Security-Policy" content="upgrade-insecure-requests">
 
     <link rel="apple-touch-icon" href="apple-icon.png">
     <link rel="shortcut icon" href="favicon.ico">
@@ -47,10 +46,10 @@
             <div id="main-menu" class="main-menu collapse navbar-collapse">
                 <ul class="nav navbar-nav">
                     <li>
-                        <a href="{{ url('admin/history') }}"> <i class="menu-icon fa fa-dashboard"></i>Dashboard </a>
+                        <a href="{{ url('admin/home') }}"> <i class="menu-icon fa fa-dashboard"></i>Dashboard </a>
                     </li>
                     <li>
-                        <a href="{{ url('admin/history') }}"> <i class="menu-icon fa fa-plus-square"></i>Add New </a>
+                        <a href="{{ route('checkout-index') }}"> <i class="menu-icon fa fa-plus-square"></i>Add New </a>
                     </li>
                     <li>
                         <a href="{{ url('admin/history') }}"> <i class="menu-icon fa fa-database "></i>History </a>
@@ -59,7 +58,7 @@
                         <a href="{{ url('admin/income') }}"> <i class="menu-icon fa fa-line-chart"></i>Income </a>
                     </li>
                     <li>
-                        <a href="{{ url('admin/income') }}"> <i class="menu-icon fa fa-book"></i>Room </a>
+                        <a href="{{ route('room-index') }}"> <i class="menu-icon fa fa-book"></i>Room </a>
                     </li>
                 </ul>
             </div><!-- /.navbar-collapse -->

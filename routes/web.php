@@ -71,6 +71,7 @@ Route::post('admin/room', [RoomController::class, 'add'])->name('add-room');
  */
 Route::get('admin/checkout', [MidtransApiController::class, 'index'])->name('checkout-index');
 Route::post('admin/booking', [MidtransApiController::class, 'booking'])->name('booking');
+Route::post('payment', [MidtransApiController::class, 'payment_post'])->name('pay.post');
 Route::get('testing/{id}', [MidtransApiController::class, 'getDetail']);
 /**
  * Payment Admin Gateway End

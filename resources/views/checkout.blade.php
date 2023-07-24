@@ -70,6 +70,9 @@
                                     <input class="form-control" type="text" placeholder="No. Booking" name="no_booking" required>
                                 </div>
                             </div>
+                            <div class="form-btn">
+                                <button type="submit" class="submit-btn">Checkout</button>
+                            </div>
                         </div>
                     </form>
                 </div>
