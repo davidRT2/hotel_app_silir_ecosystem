@@ -10,7 +10,7 @@ use Illuminate\Pagination\LengthAwarePaginator;
 
 class ApiController extends Controller
 {
-    private $baseUrl = "192.168.27.115:8080/api/v1/";
+    private $baseUrl = "localhost:8080/api/v1/";
 
     public function getDataPenginap(Request $request)
     {
@@ -30,8 +30,9 @@ class ApiController extends Controller
         $dataKamar = $responKamar['data'];
         $responseBody = json_decode($response->getBody(), true);
         $jumlahPenginap = count($responseBody['data']);
-        $data = $this->paginate($responseBody['data'], 5, null, [], $request->fullUrl());
-        return view('admin.home', compact('data', 'dataKamar', 'jumlahPenginap'));
+        // return $data[0]['id_kamar'];
+        $data2 = $this->paginate($responseBody['data'], 5, null, [], $request->fullUrl());
+        return view('admin.home', compact('data2', 'dataKamar', 'jumlahPenginap'));
     }
     public function paginate($items, $perPage = 5, $page = null, $options = [], $currentUrl)
     {
@@ -120,5 +121,17 @@ class ApiController extends Controller
         // Lakukan proses selanjutnya, seperti menyimpan data ke database atau mengirim email konfirmasi
 
         return view('checkout', compact('nama', 'nomorTelepon', 'checkIn', 'checkOut', 'roomType', 'kodeTiket', 'kodeParkir'));
+    }
+
+    public function getJenisLayanan($id)
+    {
+        $client = new Client();
+        $url = $this->baseUrl . 'kamar/' . $id; // Correct the URL here
+        $response = $client->request('GET', $url, [
+            'verify' => false, // Set it to true for valid SSL certificates
+        ]);
+        $responseBody = json_decode($response->getBody(), true);
+        $data = $responseBody['data'];
+        return $data['nama_tipe'];
     }
 }

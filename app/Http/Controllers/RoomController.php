@@ -14,7 +14,7 @@ use Illuminate\Pagination\LengthAwarePaginator;
 class RoomController extends Controller
 {
     //
-    private $baseUrl = "192.168.27.115:8080/api/v1/";
+    private $baseUrl = "localhost:8080/api/v1/";
 
     public function index(Request $request)
     {

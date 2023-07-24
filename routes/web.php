@@ -73,7 +73,7 @@ Route::get('admin/checkout', [MidtransApiController::class, 'index'])->name('che
 Route::post('admin/booking', [MidtransApiController::class, 'booking'])->name('booking');
 Route::post('payment', [MidtransApiController::class, 'payment_post'])->name('pay.post');
 Route::post('payment/testing', [MidtransApiController::class, 'payment_post_test'])->name('pay.post.test');
-Route::get('testing', [MidtransApiController::class, 'generateID_penginap']);
+Route::get('testing/{id}', [ApiController::class, 'getJenisLayanan']);
 /**
  * Payment Admin Gateway End
  */
