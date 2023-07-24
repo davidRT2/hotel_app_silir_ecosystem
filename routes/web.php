@@ -5,6 +5,7 @@ use Illuminate\Support\Facades\Route;
 use App\Http\Controllers\ApiController;
 use App\Http\Controllers\MidtransApiController;
 use App\Http\Controllers\RoomController;
+use App\Http\Controllers\UserMidtransController;
 use Illuminate\Routing\RouteRegistrar;
 
 /*
@@ -44,7 +45,7 @@ Route::get('/reservation', [ApiController::class, 'getTipe'])->name('reservation
 Route::get('/detail-kamar/{id}', [ApiController::class, 'getDetailKamar'])->name('detail-kamar.index');
 
 //checkout febri
-Route::post('/checkout', [ApiController::class, 'checkout'])->name('checkout');
+//Route::post('/checkout', [ApiController::class, 'checkout'])->name('checkout');
 
 //dapid
 Route::get('admin/home', [ApiController::class, 'getDataPenginap'])->name('admin.home');
@@ -76,4 +77,17 @@ Route::post('payment/testing', [MidtransApiController::class, 'payment_post_test
 Route::get('testing/{id}', [ApiController::class, 'getJenisLayanan']);
 /**
  * Payment Admin Gateway End
+ */
+/**
+ * Payment user Gateway Start
+ */
+Route::get('admin/checkout', [UserMidtransController::class, 'index'])->name('checkout-index');
+Route::post('admin/booking', [UserMidtransController::class, 'booking'])->name('booking');
+Route::post('payment', [UserMidtransController::class, 'payment_post'])->name('pay.post');
+Route::post('payment/testing', [UserMidtransController::class, 'payment_post_test'])->name('pay.post.test');
+Route::get('testing', [UserMidtransController::class, 'generateID_penginap']);
+
+Route::post('/checkout', [UserMidtransController::class, 'checkout'])->name('checkout');
+/**
+ * Payment user Gateway End
  */
