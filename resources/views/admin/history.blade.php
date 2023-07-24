@@ -49,11 +49,14 @@ $data = [
 </div>
 <div class="content mt-3">
     <div class="animated fadeIn">
-        <div class="col-sm-6">
+        <div class="col-sm-12">
             <div class="card">
                 <div class="card-body">
+                    <div class="row">
                     <h4 class="mb-3">Trend Penginap</h4>
-                    <canvas id="team-chart"></canvas>
+                    <canvas id="sales-chart"></canvas>
+                    </div>
+                    
                 </div>
             </div>
         </div><!-- /# column -->

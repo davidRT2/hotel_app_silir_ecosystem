@@ -13,9 +13,8 @@ use SebastianBergmann\Environment\Console;
 class MidtransApiController extends Controller
 {
     //
-    private $baseUrl = "localhost:8080/api/v1/";
-    public function index()
-    {
+    private $baseUrl = "https://422c-103-162-237-197.ngrok-free.app/api/v1/";
+    public function index(){
         $client = new Client();
         $url = $this->baseUrl . 'tipe';
         $response = $client->request('GET', $url, [

@@ -83,6 +83,9 @@
                                     Bayar
                                 </button>
                             </div>
+                            <div class="form-btn">
+                                <button type="submit" class="submit-btn">Checkout</button>
+                            </div>
                         </div>
                     </form>
                 </div>

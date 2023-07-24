@@ -42,7 +42,7 @@ $data = [
 
     <div class="content mt-3">
         <div class="animated fadeIn">
-            <div class="col-sm-6">
+            <div class="col-sm-12">
                 <div class="card">
                     <div class="card-body">
                         <h4 class="mb-3">Trend Penginap</h4>
@@ -52,7 +52,7 @@ $data = [
             </div><!-- /# column -->
 
             <div class="">
-                <div class="col-md-6">
+                <div class="col-md-10">
                     <div class="page-header float-left">
                         <div class="page-title">
                             <h1>Total Pemasukan</h1>

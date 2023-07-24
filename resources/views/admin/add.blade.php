@@ -45,6 +45,7 @@
                                         <input type="hidden" id="durasi" name="durasi">
                                     </div>
                                 </div>
+                                <input type="hidden" id="durasi" name="durasi">
                                 <div class="col-md-6">
                                     <label class=" form-control-label">Nama</label>
                                     <div class="input-group">

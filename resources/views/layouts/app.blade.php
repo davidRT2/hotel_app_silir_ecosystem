@@ -4,7 +4,7 @@
 <head>
     <title>Hotel Silir</title>
     <link rel="icon" href="{{ asset('img/logo.jpeg') }}" type="image/png">
-    <meta http-equiv="Content-Security-Policy" content="upgrade-insecure-requests">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
 
     <link href="https://fonts.googleapis.com/css?family=Merriweather:300,400|Montserrat:400,700" rel="stylesheet">
     <link rel="stylesheet" href="{{ asset('css/animate.css') }}">

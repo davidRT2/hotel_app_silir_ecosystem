@@ -10,7 +10,7 @@ use Illuminate\Pagination\LengthAwarePaginator;
 
 class ApiController extends Controller
 {
-    private $baseUrl = "localhost:8080/api/v1/";
+    private $baseUrl = "https://422c-103-162-237-197.ngrok-free.app/api/v1/";
 
     public function getDataPenginap(Request $request)
     {
