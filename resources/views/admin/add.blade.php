@@ -45,7 +45,6 @@
                                         <input type="hidden" id="durasi" name="durasi">
                                     </div>
                                 </div>
-                                <input type="hidden" id="durasi" name="durasi">
                                 <div class="col-md-6">
                                     <label class=" form-control-label">Nama</label>
                                     <div class="input-group">
@@ -69,13 +68,13 @@
                                         <input id="nomorTelepon" class="form-control" type="number" name="nomor" required>
                                     </div>
                                 </div>
-                                <div class="col-md-3">
+                                <div class="col-md-3" style="display:none">
                                     <label class=" form-control-label">Kode Parkir</label>
                                     <div class="input-group">
                                         <input id="kodeParkir" class="form-control" type="number" name="kode-parkir">
                                     </div>
                                 </div>
-                                <div class="col-md-3">
+                                <div class="col-md-3" style="display:none">
                                     <label class=" form-control-label">Kode Ticket</label>
                                     <div class="input-group">
                                         <input id="kodeTicket" class="form-control" type="number" name="kode-ticket">

@@ -52,10 +52,10 @@
                         <a href="{{ route('checkout-index') }}"> <i class="menu-icon fa fa-plus-square"></i>Add New </a>
                     </li>
                     <li>
-                        <a href="{{ url('admin/history') }}"> <i class="menu-icon fa fa-database "></i>History </a>
+                        <a href="{{ route('history.index') }}"> <i class="menu-icon fa fa-database "></i>History </a>
                     </li>
                     <li>
-                        <a href="{{ url('admin/income') }}"> <i class="menu-icon fa fa-line-chart"></i>Income </a>
+                        <a style="display: none;" href="{{ url('admin/income') }}"> <i class="menu-icon fa fa-line-chart"></i>Income </a>
                     </li>
                     <li>
                         <a href="{{ route('room-index') }}"> <i class="menu-icon fa fa-book"></i>Room </a>
@@ -122,7 +122,7 @@
 
                             <a class="nav-link" href="#"><i class="fa fa-cog"></i> Settings</a>
 
-                            <a class="nav-link" href="#"><i class="fa fa-power-off"></i> Logout</a>
+                            <a class="nav-link" href="{{ route('logout') }}"><i class="fa fa-power-off"></i> Logout</a>
                         </div>
                     </div>
 

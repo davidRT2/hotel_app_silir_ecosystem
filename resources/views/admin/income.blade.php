@@ -101,7 +101,7 @@ $data = [
                     labels: ["Jan", "Feb", "Mar", "Apr", "May", "Jun"],
                     datasets: [{
                         label: 'Sales Summary',
-                        data: [200, 300, 110, 200, 600, 700],
+                        data: [200, 300, 0, 200, 600, 700],
                         backgroundColor: 'rgba(0, 123, 255, 0.7)'
                     }]
                 },

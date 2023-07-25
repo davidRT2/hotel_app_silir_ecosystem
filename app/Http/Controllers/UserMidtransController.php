@@ -14,7 +14,7 @@ use SebastianBergmann\Environment\Console;
 
 class UserMidtransController extends Controller
 {
-    private $baseUrl = "http://192.168.27.115:8080/api/v1/";
+    private $baseUrl = "localhost:8080/api/v1/";
 
     public function checkout(Request $request)
     {
@@ -71,13 +71,13 @@ class UserMidtransController extends Controller
         $serverKey = config('midtrans.server_key');
         $hashed = hash("sha512", $request->order_id . $request->status_code . $request->gross_amount . $serverKey);
 
-        if ($hashed == $request->signature_key) {
-            if ($request->transaction_status == 'capture') {
-                // Assuming you have the Order model to handle orders
-                $order = Order::find($request->order_id);
-                $order->update(['status' => 'Paid']);
-            }
-        }
+        // if ($hashed == $request->signature_key) {
+        //     if ($request->transaction_status == 'capture') {
+        //         // Assuming you have the Order model to handle orders
+        //         $order = Order::find($request->order_id);
+        //         $order->update(['status' => 'Paid']);
+        //     }
+        // }
     }
 
     public function getDetail($id)

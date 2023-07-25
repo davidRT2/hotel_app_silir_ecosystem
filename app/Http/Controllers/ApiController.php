@@ -10,7 +10,7 @@ use Illuminate\Pagination\LengthAwarePaginator;
 
 class ApiController extends Controller
 {
-    private $baseUrl = "https://422c-103-162-237-197.ngrok-free.app/api/v1/";
+    private $baseUrl = "localhost:8080/api/v1/";
 
     public function getDataPenginap(Request $request)
     {
@@ -29,7 +29,13 @@ class ApiController extends Controller
         $responKamar = json_decode($responKamar->getBody(), true);
         $dataKamar = $responKamar['data'];
         $responseBody = json_decode($response->getBody(), true);
-        $jumlahPenginap = count($responseBody['data']);
+        $jumlahPenginap = 0;
+        $data = $responseBody['data'];
+        foreach ($data as $entry) {
+            if ($entry['status'] == 1) {
+                $jumlahPenginap++;
+            }
+        }
         // return $data[0]['id_kamar'];
         $data2 = $this->paginate($responseBody['data'], 5, null, [], $request->fullUrl());
         return view('admin.home', compact('data2', 'dataKamar', 'jumlahPenginap'));
